@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            利用 OpenGL 绘制海绵宝宝 | 
+        
+        Jianing&#39;s Blog
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Jianing Wang">
+    <meta name="description" itemprop="description" content="前言一场由海绵宝宝引发的原型设计, 抽象等编程问题的讨论.">
+    <meta name="keywords" content=",iOS,OpenCV">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png">
+    <link rel="icon" sizes="192x192" href="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
+    <link rel="apple-touch-icon" href="http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Jianing&#39;s Blog">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="利用 OpenGL 绘制海绵宝宝 | Jianing&#39;s Blog">
+    <meta property="og:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png" />
+    <meta property="og:description" content="前言一场由海绵宝宝引发的原型设计, 抽象等编程问题的讨论.">
+    <meta property="og:article:tag" content="iOS"> <meta property="og:article:tag" content="OpenCV"> 
+
+    
+        <meta property="article:published_time" content="4月 07, 2017" />
+        <meta property="article:modified_time" content="8月 25, 2017" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="利用 OpenGL 绘制海绵宝宝 | Jianing&#39;s Blog">
+    <meta name="twitter:description" content="前言一场由海绵宝宝引发的原型设计, 抽象等编程问题的讨论.">
+    <meta name="twitter:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://yoursite.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jianing&#39;s Blog",
+        "logo": "http://on74pxnsk.bkt.clouddn.com/JN-blue.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jianing Wang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png"
+        },
+        "description": "Night gets darkest right before dawn"
+    },
+    "headline": "利用 OpenGL 绘制海绵宝宝",
+    "url": "http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html",
+    "datePublished": "4月 07, 2017",
+    "dateModified": "8月 25, 2017",
+    "description": "前言一场由海绵宝宝引发的原型设计, 抽象等编程问题的讨论.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #311B92;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #4285F4 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #4285F4 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #4285F4 !important;
+  }
+
+  .toTop {
+    background: #FF3366 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #FF3366;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #FF3366;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #FF3366;
+  }
+
+  .post-toc a:hover {
+    color: #311B92;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sketch"><span class="post-toc-number">2.</span> <span class="post-toc-text">Sketch</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#临摹"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">临摹</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#坐标化"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">坐标化</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编程之前"><span class="post-toc-number">3.</span> <span class="post-toc-text">编程之前</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基本绘制工具"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">基本绘制工具:</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开始编程"><span class="post-toc-number">4.</span> <span class="post-toc-text">开始编程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于鼠标拖动部位"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">关于鼠标拖动部位</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#效果图"><span class="post-toc-number">5.</span> <span class="post-toc-text">效果图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">6.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://on74pxnsk.bkt.clouddn.com/blog-thumb-6.jpg)">
+    
+            <p class="article-headline-p">
+                利用 OpenGL 绘制海绵宝宝
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Jianing Wang</strong>
+        <span>4月 07, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC2UlEQVR42u3aQW7DMAwEwPz/0+0DiiS7lNs60vgUJK6loYESJPX4OvJ6YGNjY2NjY2NjY9+S/Yivn/c/e8LP58/uzJ/zes/Y2NjYJ7Df/Ot/sqFkK68ZbVhne8bGxsY+h51vOnnCs2/yFJWHPgo0NjY2NvZCgkmCWBQV2NjY2Njrj1hgzwKBjY2NjX1VUynH5LxZOP60l4aNjY19e3Y76L3D53+Yb2NjY2Pfkt1eyYA2T2wr44R659jY2NibslcOViZNpSQcLbJtcmFjY2OfwM5TSPJ9cmfb+s9fzNPXg42Njb01u261x6XF60DkBU8ySH6T9rCxsbE3Zc9SxXrquqrlVIQSGxsbe2v2SlMpbw+tFCEXNLCwsbGxN2W3B3RWBgaz0mLWSMLGxsY+h90OVtvWf1s2JKF8fQ82Njb2aez1xDA7fPPbya+YimBjY2N/ODtPQuvN+vZv85ANB73Y2NjY27Hb0W9eDOTtqjZkyevBxsbGPofdDgZmy7cDgPXhBDY2Nvbe7Lzh3pYubYGxUn5E4cDGxsY+gJ0nsLyMmR3uyUNWhAkbGxt7a3a+ZHvsJikq8lSa77aeb2NjY2N/LLs9LtNu5arUuF7SYGNjY+/KvqDtfulhzfyVtEHExsbG3ps9a/fnDaA8NLMGFjY2NvbJ7ORBs8VWEt7sQM+bdbGxsbG3Zs/Kj3YYkKfA9dFyNB7AxsbG3oKdj1rbdJW0q6799U1phI2Njb0puz2+06aZPBCzX/ODO9jY2NgnsNuBazIeWGn058VSVD5hY2Njb8p+xFe7fLK5dtiw0n7CxsbG3ps9Sy1ta2l9kNyGGxsbG/s09qxZkyewNih5oo2KFmxsbGzsi8YDeUtotreiqYSNjY19MHs4ah2NCmYD6V9JYNjY2Ni3Z7fN/ZUSIg/9SqCxsbGxz2G3y+QNnTzZzIYQf3pkBxsbG/uW7HMubGxsbGxsbGxs7Ntc3w2NUyVJMYFqAAAAAElFTkSuQmCC">
+    
+</ul>
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/OpenCV/">OpenCV</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/iOS/">iOS</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=利用 OpenGL 绘制海绵宝宝&url=http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=利用 OpenGL 绘制海绵宝宝&url=http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html&via=Jianing Wang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一场由海绵宝宝引发的原型设计, 抽象等编程问题的讨论.</p>
+<a id="more"></a>
+<p>先来个效果图, 是不是很萌.</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-01.png" alt="blog-gl-01"></p>
+<p>语言: C++</p>
+<p>库: OpenGL</p>
+<p>工具: Sketch, Xcode </p>
+<h2 id="Sketch"><a href="#Sketch" class="headerlink" title="Sketch"></a>Sketch</h2><p>乍一看, Sketch 作为一个原型工具, 跟 OpenGL 毛关系啊. 别着急.</p>
+<h3 id="临摹"><a href="#临摹" class="headerlink" title="临摹"></a>临摹</h3><p>作为毫无美术功底但有几年书法经验的人, 深知临摹的重要性啊. 编程也是一样的, 多去看一看别人是怎么写的, 很重要.</p>
+<p>我去网上找了一个图片, 如右图, 然后经过我的临摹, 绘制了左图. (临摹的时候, 肯定放在原图上面临摹, Sketch 可以提供锁定和隐藏选项, 方便观察某个部位是否临摹的像. 为了方便展示, 最后把成果图移到了左边)</p>
+<p>因为方便 OpenGL 绘制, 我只用了最简单的图形包括线段, 矩形, 多边形(领带), 圆形和椭圆. 整体还是很简单的.</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-02.jpg" alt="blog-gl-02"></p>
+<h3 id="坐标化"><a href="#坐标化" class="headerlink" title="坐标化"></a>坐标化</h3><p>当然了, 使用 Sketch 最重要的功能是, <strong>彻底坐标化</strong>.</p>
+<p>什么意思呢?</p>
+<p>比如当我选中了左边的胳膊, 右边有相应的位置, 大小和旋转信息, 以及颜色值. <strong>经过统一的坐标变换函数</strong>, 在实际编程时直接填上 Sketch 里面的数值, 直接映射成 OpenGL 绘制的坐标, 是不是超方便. 一比一仿真绘制.</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-03.jpg" alt="blog-gl-03"></p>
+<p>这引发了第一个问题, 关于原型设计的问题.</p>
+<p>我从自学 iOS 开始, 也就是自学编程来, 脑子里有一个想法, 想做出来的时候, 我第一步打开的是 Sketch, 而不是 Xcode. 在我不断的将脑子里的想法 “画” 出来的时候, 我会考虑一会程序怎么写, 哪些类可以抽象出来等等. 还有一个好处是, 坐标都有了, 写程序的时候不会因为坐标这些东西扰乱思路, 专心写逻辑.</p>
+<h2 id="编程之前"><a href="#编程之前" class="headerlink" title="编程之前"></a>编程之前</h2><p>在原型设计之后, 对于整个项目已经有了非常细致的了解了. 所以实际前代码之前, 先把一些共性的东西抽象出来.</p>
+<p>我们可以看到, 海绵宝宝由很多不同的矩形, 圆形, 椭圆和线段组成, 少部分多边形.</p>
+<p>矩形又可以分为填充矩形, 和不填充矩形, 以及填充带边的矩形, 圆形椭圆也是这样.</p>
+<p>所以, 我们从弧线开始, 圆形和椭圆特殊的闭合弧线.</p>
+<p>因为后期有功能需要根据键盘方向键进行旋转, 所以绘制的角度 <code>theta</code> 最好是全局变量.</p>
+<h3 id="基本绘制工具"><a href="#基本绘制工具" class="headerlink" title="基本绘制工具:"></a>基本绘制工具:</h3><pre class=" language-c++"><code class="language-c++">//弧线
+//起始角, 结束角
+void drawArc(double x,double y,double start_angle,double end_angle,double delta_angle,double radius,bool fill, bool line=false)
+{
+    if (fill)
+    {
+        glBegin(GL_TRIANGLE_FAN);
+        for (double i=start_angle;i<=e![Screen Shot 2017-08-19 at 5.40.21 PM](/Users/Jianing/Desktop/Screen Shot 2017-08-19 at 5.40.21 PM.png)nd_angle;i+=delta_angle)
+        {
+            double vx=x+radius * cos(i);
+            double vy=y+radius*sin(i);
+            glVertex2d(vx,vy);
+        }
+        glEnd();
+    }
+    if (line)
+    {
+        glBegin(GL_LINE_STRIP);
+        glColor3f(0.0f, 0.0f, 0.0f);
+        for (double i=start_angle;i<=end_angle;i+=delta_angle)
+        {
+            double vx=x+radius * cos(i);
+            double vy=y+radius*sin(i);
+            glVertex2d(vx,vy);
+        }
+        glVertex2d(x+radius * cos(start_angle), y+radius*sin(start_angle));
+        glVertex2d(x+radius * cos(end_angle), y+radius*sin(end_angle));
+        glEnd();
+    }
+}
+</code></pre>
+<p>这样一来, 圆就简单了</p>
+<pre class=" language-c++"><code class="language-c++">//圆
+void drawCircle(double x, double y, double radius,bool fill,bool line=false)
+{
+    double pi=acos(-1.0);
+    drawArc(x,y,0,2*pi,pi/180,radius,fill,line);
+}
+</code></pre>
+<p>调用的时候, 可以根据需求, 选择是否填充.</p>
+<p>再例如, 填充带边多边形可以调用两次绘制多边形的方法来做.</p>
+<pre class=" language-c++"><code class="language-c++">//多边形
+void glPolygon(polygon poly, int MODE, int x, int y)
+{
+    glBegin( MODE );
+    for ( int i = 0; i <= poly.length; i++ )
+    {
+        glVertex2d( poly.x[i]+x, poly.y[i] +y);
+    }
+    glEnd();
+}
+
+//填充多边形
+void glFillPolygon(polygon poly, GLfloat color[3], int x, int y)
+{
+    glColor3f(0,0,0);
+    glPolygon(poly, GL_LINE_LOOP, x, y);
+    glColor3f(color[0],color[1],color[2]);
+    glPolygon(poly, GL_POLYGON, x, y);
+}
+</code></pre>
+<h2 id="开始编程"><a href="#开始编程" class="headerlink" title="开始编程"></a>开始编程</h2><p>因为我加了许多其他的功能, 例如五官可以拖动, 可以右键换颜色, 可以根据键盘方向键旋转等功能. 所以代码会有其他不同的地方.</p>
+<p>因为之前有 Sketch 的具体坐标, 以及基本构成是简单图形, 所以每个部位非常好画, 例如:</p>
+<pre class=" language-c++"><code class="language-c++">    //画左腿
+    glLoadIdentity();
+    glRotatef(theta, 0.0, 0.0, 1.0);
+    glColor3f(colors[BODY_COLOR][0], colors[BODY_COLOR][1], colors[BODY_COLOR][2]);
+    glTranslateRotateRect(5, 26, -18, -20, -19);
+
+    //画左脚
+    glLoadIdentity();
+    glRotatef(theta, 0.0, 0.0, 1.0);
+    glRect(-33, -44, -23, -51, true, true);
+    glRect(-23, -40, -16, -51, true, true);
+
+    //画左臂
+    glLoadIdentity();
+    glRotatef(theta, 0.0, 0.0, 1.0);
+    glColor3f(colors[BODY_COLOR][0], colors[BODY_COLOR][1], colors[BODY_COLOR][2]);
+    glTranslateRotateRect(41, 4, 34, 63, 34);
+
+    //画腮帮子
+    glLoadIdentity();
+    glRotatef(theta, 0.0, 0.0, 1.0);
+    glColor3f(colors[BROWN_FACE][0],colors[BROWN_FACE][1],colors[BROWN_FACE][2]);
+    drawArc(28, 40, -50*PI/180, 220*PI/180, pi/180, 5, true, false);
+    glColor3f(colors[BODY_COLOR][0],colors[BODY_COLOR][1],colors[BODY_COLOR][2]);
+    drawCircle(28 ,40, 4.3,true);
+</code></pre>
+<p>上述方法组成了”画身体”方法</p>
+<p>具体画的</p>
+<pre class=" language-c++"><code class="language-c++">void myDisplay(void)
+{
+    //清除缓存
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    paintViewport();
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+
+    glInitNames();
+    glPushName(0);
+
+    //身体
+    glLoadName(Body);
+    drawBody(BodyCor[0], BodyCor[1]);
+
+    //嘴
+    glPushMatrix();
+    glLoadIdentity();
+    glLoadName(Mouth);
+    drawMouth(MouthCor[0], MouthCor[1]);
+
+    //左眼
+    glPushMatrix();
+    glLoadIdentity();
+    glLoadName(EyeLeft);
+    drawEyeLeft(EyeLeftCor[0], EyeLeftCor[1]);
+
+    //衣服
+    glPushMatrix();
+    glLoadIdentity();
+    glLoadName(Clothes);
+    drawClothes(ClothesCor[0], ClothesCor[1]);
+
+    ...
+    glPopMatrix();
+    ....
+    glutSwapBuffers();
+}
+</code></pre>
+<p>每次绘制之前压栈 <code>glPushMatrix();</code> 最后出栈<code>glPopMatrix</code>, <code>glutSwapBuffers</code> 交换双缓冲就好了.</p>
+<h3 id="关于鼠标拖动部位"><a href="#关于鼠标拖动部位" class="headerlink" title="关于鼠标拖动部位"></a>关于鼠标拖动部位</h3><p>鼠标点击后, 利用 MouseCallback 将鼠标点击的坐标发给 ProcessSelection 函数处理, ProcessSelection 将 gluPickMatrix 获取点击的深度信息和绘制时 Push 的name, 根据 name, 将全局变量改变, 将 select_part 改为选中的部位, 然后在重新绘制时, 根据拖动的坐标偏移量加上原坐标, 就能做到随鼠标移动.</p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p>跟随方向键旋转<br><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-04.png" alt="blog-gl-04"></p>
+<p>五官分离…<br><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-05.png" alt="blog-gl-05"></p>
+<p>右键菜单<br><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-06.png" alt="blog-gl-06"></p>
+<p>奇怪染色的海绵宝宝<br><img src="http://on74pxnsk.bkt.clouddn.com/blog-gl-07.png" alt="blog-gl-07"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当然了, 如果不是很熟悉, 在编程之前考虑得不可能那么成熟, 随着不断地敲下去才可能发现有些地方可以抽象出来, 这个时候就需要重构了. 程序没有一次写好的, 不断重构是常态.</p>
+<p>就是一个简单的海绵宝宝程序. 最后感谢实验室<a href="http://cuiqingcai.com" target="_blank" rel="external">男神</a>提供的<a href="http://cuiqingcai.com/2467.html" target="_blank" rel="external">OpenGL 教程</a>, 男神已经成为了知名博主了. 再次站在巨人的肩膀上.</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yoursite.com/2017/04/07/一场由海绵宝宝引发的编程大案/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//jianings-blog.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/06/27/关于Jianing-s-Blog/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/03/09/Workflow初识/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://on74pxnsk.bkt.clouddn.com/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" alt="Jianing Wang's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        wjnmailg@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: wjnmailg@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">4</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时轴">
+                
+                    <i class="material-icons sidebar-material-icons">access_time</i>
+                
+                时轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                标签
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/gallery" title="映像">
+                
+                    <i class="material-icons sidebar-material-icons">collections</i>
+                
+                映像
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友链">
+                
+                    <i class="material-icons sidebar-material-icons">share</i>
+                
+                友链
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/SteveWjnmailg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Jianing's Blog
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#2299DD'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #2299DD, 0 0 15px #2299DD'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#2299DD',
+        'border-left-color': '#2299DD'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//jianings-blog.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
