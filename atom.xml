@@ -31,9 +31,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
-    
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
     
   </entry>
   
@@ -53,9 +53,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
-    
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
     
   </entry>
   
@@ -93,9 +93,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
-    
       <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
+    
+      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
   </entry>
   
@@ -142,20 +142,25 @@
     <link href="http://yoursite.com/2016/11/14/iOS%20%E5%88%A9%E7%94%A8%20OpenCV%20%E5%AE%9E%E6%97%B6%E8%AF%86%E5%88%AB%E6%89%8B%E6%8C%87/"/>
     <id>http://yoursite.com/2016/11/14/iOS 利用 OpenCV 实时识别手指/</id>
     <published>2016-11-14T04:00:00.000Z</published>
-    <updated>2017-08-25T13:01:20.000Z</updated>
+    <updated>2017-09-01T01:27:04.000Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;利用 OpenCV 在 iOS 设备上利用摄像头, 实时识别手指个数. &lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;2017-8-31更新&lt;/p&gt;
+&lt;p&gt;程序在去年就写了，只不过前段时间刚整理了一下开源了，不到两周就收到了国际友人的来信，在这里统一说一下，在背景与手部肤色相差很大的情况下，算法会很准确，在复杂背景下准确识别手指，是不太准确的。这篇文章参考了 &lt;a href=&quot;https://picoledelimao.github.io/blog/2015/11/15/fingertip-detection-on-opencv/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Fingertip Detection in OpenCV&lt;/a&gt;，有其他疑问可以联系一下文章的作者。&lt;/p&gt;
+&lt;p&gt;以下是原文：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;利用 OpenCV 在 iOS 设备上利用摄像头, 实时识别手指个数. &lt;/p&gt;
     
     </summary>
     
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
-    
       <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
+    
+      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
   </entry>
   
