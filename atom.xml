@@ -31,9 +31,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
-    
       <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
   </entry>
   
@@ -53,9 +53,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
-    
       <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
+    
+      <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
   </entry>
   
@@ -93,9 +93,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
-    
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
+    
+      <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
     
   </entry>
   
@@ -158,9 +158,9 @@
       <category term="iOS" scheme="http://yoursite.com/categories/iOS/"/>
     
     
-      <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
-    
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
+    
+      <category term="OpenCV" scheme="http://yoursite.com/tags/OpenCV/"/>
     
   </entry>
   
