@@ -72,7 +72,7 @@
 
     
         <meta property="article:published_time" content="9月 04, 2017" />
-        <meta property="article:modified_time" content="9月 05, 2017" />
+        <meta property="article:modified_time" content="9月 07, 2017" />
     
 
     <!-- The Twitter Card protocol -->
@@ -113,7 +113,7 @@
     "headline": "RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改",
     "url": "http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html",
     "datePublished": "9月 04, 2017",
-    "dateModified": "9月 05, 2017",
+    "dateModified": "9月 07, 2017",
     "description": "前言在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -489,7 +489,7 @@
 </code></pre>
 <p>可以参见 Github 上的 <a href="https://github.com/ReactiveX/RxSwift/issues/551" target="_blank" rel="external">issues</a> 和 <a href="https://github.com/ReactiveX/RxSwift/issues/690" target="_blank" rel="external">issues</a></p>
 <h2 id="我遇见的问题"><a href="#我遇见的问题" class="headerlink" title="我遇见的问题"></a>我遇见的问题</h2><p>我在写 <a href="https://github.com/JianingWang/ReSwift-RxSwift-Login-Example" target="_blank" rel="external">ReSwift-RxSwift-Login-Example</a>, 为了更好的让大家直观的体验 ReSwift 和 RxSwift 对表单实时验证的效果, 做了一个自动输入的按钮, 效果如下图:</p>
-<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-cp-01.gif" alt="blog-cp-01"></p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-cp-02.gif" alt="blog-cp-02"></p>
 <p>我首先将 <code>UITextField.rx.text</code> 绑定到 <code>State</code>, 然而用程序去改变 <code>rx.text</code> 时, 全局的 <code>state</code> 并不会改变.</p>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不管是 <code>UISwitch.rx.value</code> 还是 <code>UITextField.rx.value</code> 这种 <code>ControlProperty</code> 并不会观察 <em>程序性改变</em>.</p>
 <p>解决的办法是利用双向绑定, 将 <code>ControlProperty</code> 和一个 <code>Variable</code> 绑定.</p>
@@ -612,6 +612,14 @@ switchValue<span class="token punctuation">.</span>value <span class="token oper
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2017/09/05/iOS 单向数据流架构之 ReactorKit/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
@@ -710,7 +718,7 @@ switchValue<span class="token punctuation">.</span>value <span class="token oper
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -728,7 +736,7 @@ switchValue<span class="token punctuation">.</span>value <span class="token oper
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">5</span></a>
+                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">8</span></a>
             </ul>
         </li>
         

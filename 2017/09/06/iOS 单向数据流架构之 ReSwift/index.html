@@ -12,7 +12,7 @@
     
     <title>
         
-            归档: 2017/8 | 
+            iOS 单向数据流架构之 ReSwift | 
         
         Jianing&#39;s Blog
     </title>
@@ -35,8 +35,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Jianing Wang">
-    <meta name="description" itemprop="description" content="这是我的个人小站">
-    <meta name="keywords" content="">
+    <meta name="description" itemprop="description" content="前言系列文章第二篇, 关于 ReSwift 的介绍, 以及 ReSwift 和 ReactorKit 对比.">
+    <meta name="keywords" content=",Swift,iOS,ReSwift,架构,ReactorKit">
 
     <!-- Site Verification -->
     
@@ -65,29 +65,62 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档: 2017/8 | Jianing&#39;s Blog">
+    <meta property="og:title" content="iOS 单向数据流架构之 ReSwift | Jianing&#39;s Blog">
     <meta property="og:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png" />
-    <meta property="og:description" content="这是我的个人小站">
-    
+    <meta property="og:description" content="前言系列文章第二篇, 关于 ReSwift 的介绍, 以及 ReSwift 和 ReactorKit 对比.">
+    <meta property="og:article:tag" content="Swift"> <meta property="og:article:tag" content="iOS"> <meta property="og:article:tag" content="ReSwift"> <meta property="og:article:tag" content="架构"> <meta property="og:article:tag" content="ReactorKit"> 
 
+    
+        <meta property="article:published_time" content="9月 06, 2017" />
+        <meta property="article:modified_time" content="9月 07, 2017" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="归档: 2017/8 | Jianing&#39;s Blog">
-    <meta name="twitter:description" content="这是我的个人小站">
+    <meta name="twitter:title" content="iOS 单向数据流架构之 ReSwift | Jianing&#39;s Blog">
+    <meta name="twitter:description" content="前言系列文章第二篇, 关于 ReSwift 的介绍, 以及 ReSwift 和 ReactorKit 对比.">
     <meta name="twitter:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://yoursite.com" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/archives/2017/08/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jianing&#39;s Blog",
+        "logo": "http://on74pxnsk.bkt.clouddn.com/JN-blue.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jianing Wang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png"
+        },
+        "description": "Night gets darkest right before dawn"
+    },
+    "headline": "iOS 单向数据流架构之 ReSwift",
+    "url": "http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html",
+    "datePublished": "9月 06, 2017",
+    "dateModified": "9月 07, 2017",
+    "description": "前言系列文章第二篇, 关于 ReSwift 的介绍, 以及 ReSwift 和 ReactorKit 对比.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com"
+    }
+}
+</script>
 
 
     
@@ -267,94 +300,326 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ReSwift-简介"><span class="post-toc-number">2.</span> <span class="post-toc-text">ReSwift 简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-Store"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">The Store</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Actions"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Actions</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reducers"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Reducers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#示例"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么选用-ReSwift"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">为什么选用 ReSwift</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ReSwift-vs-ReatorKit"><span class="post-toc-number">3.</span> <span class="post-toc-text">ReSwift vs ReatorKit</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从-RxSwift-结合性来看"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">从 RxSwift 结合性来看</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从社区完善程度来看"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">从社区完善程度来看</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从官方示例来看"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">从官方示例来看</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从数据流的传递方式上来看"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">从数据流的传递方式上来看</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#结论"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">结论</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最后"><span class="post-toc-number">4.</span> <span class="post-toc-text">最后</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy" data-original="http://on74pxnsk.bkt.clouddn.com/blog-thumb-4.jpg">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://on74pxnsk.bkt.clouddn.com/blog-thumb-9.jpg)">
+    
+            <p class="article-headline-p">
+                iOS 单向数据流架构之 ReSwift
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Jianing Wang</strong>
+        <span>9月 06, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC5ElEQVR42u3aUXLbMAwEUN//0u0BUsu7oNzY5NNXJ1UUPmUmMLB4/DnyemBjY2NjY2NjY2N/JPsRX9f3//zfZ/f/40A/7r/+3vbM2NjY2CewX/zpf3Ks69e38lqfPXl2ZmxsbOxz2MlRctL1gdqSNity2NjY2NjXRSU/4tP2oGxmsLGxsbHvKmDFKCduY9bLGzY2NjZ2PqB5VlryliNvePLzvHGWho2Njf3x7Nn4/nf//Qv5NjY2NvZHsoeLjKMVnPxp1y3N8MzY2NjYm7Kvm4R8bJQP9FtGG1QMly+xsbGxv5Zdj2YueW0MnH89f/VPyyo2Njb2puzZ4/I4NnlCcv8NzQw2Njb21uz1aDYvYG2QfFf8jI2NjX0COylC+ThptkCZF6d6jIWNjY19DHu42hi/gtnyTTuQGga92NjY2F/Lnn3on92ZY1YGWNjY2NjnsHNG2wysD5jeGA9gY2Njb8TOF2WS1iV5TW1snL+It+ycYmNjY388e1Z+ZmHAzcuU5XIPNjY29q7sdqzzf2KDtimKfknY2NjYm7Lz476vwOTDqbxNwsbGxj6NPTtEW+ry9co8hFjqwLCxsbE3YreLkiulbhYbrITN2NjY2Huz2w/97dHbhZvZLyBaBsLGxsbemj0LCWaDnnZlp21L6lQEGxsb+8vZ+dDnrsHTSiCxdD82Njb2puzhx/o4uJ2Vn/anRHEyNjY29sHsZGyUMBLMsM1ICio2Njb21ux80J8HunmjMntNbSCBjY2NfRo7GQ+10e/7oohhK4KNjY29Bbu91of47UDqrq9jY2Nj78qeLT7O2ol2ibMtoi/OgI2Njb01OylabZyQP382lqqfj42NjX0Auy1aK1FB0pC0121BLzY2NvYB7DxeXR885QHGizYJGxsbG7uMh9shflsm6zNjY2NjH8BuD33Xi1hfCUqiaGxsbOy92esjm4SUtyJ3hQ3Y2NjYJ7DPubCxsbGxsbGxsbE/5voL4kW5zHF3h94AAAAASUVORK5CYII=">
+    
+</ul>
     
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/08/18/Moya-RxSwift错误处理的问题/">Moya + RxSwift 错误处理的问题</a></p>
-    </div>
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/ReSwift/">ReSwift</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ReactorKit/">ReactorKit</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Swift/">Swift</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/iOS/">iOS</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/架构/">架构</a>
+    </ul>
+    
 
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            前言开发过程中的小总结.
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/08/18/Moya-RxSwift错误处理的问题/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" width="44px" height="44px" alt="Jianing Wang's avatar">
-            </div>
-            <div>
-                <strong>Jianing Wang</strong>
-                <span>8月 18, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/iOS/">iOS</a>
-            </span>
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
 
-            
+    
 
-            
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=iOS 单向数据流架构之 ReSwift&url=http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
 
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=iOS 单向数据流架构之 ReSwift&url=http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html&via=Jianing Wang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
 </div>
 
-            
-            
-        
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>系列文章第二篇, 关于 ReSwift 的介绍, 以及 ReSwift 和 ReactorKit 对比.</p>
+<a id="more"></a>
+<h2 id="ReSwift-简介"><a href="#ReSwift-简介" class="headerlink" title="ReSwift 简介"></a>ReSwift 简介</h2><p>相比于 ReactorKit, ReSwift 就更知名一些了, 4000+ star.</p>
+<p>ReSwift 把程序里的三个重要概念分离出来:</p>
+<ul>
+<li><strong>State</strong>: 整个应用的状态存储在了数据结构中. 这样可以避免复杂的状态管理代码, 更利于 debug</li>
+<li><strong>Views</strong>: 当 state 改变的时候, view 会更新.</li>
+<li><strong>State Changes</strong>: 通过 actions 来执行状态变更. Actions 是一些描述一个状态变化的数据. 通过严格限制状态可以被变更的方式, 你的应用程序变得更容易理解, 并且更容易与其他协作者合作.</li>
+</ul>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ud-04.jpg" alt="blog-ud-04"></p>
+<h3 id="The-Store"><a href="#The-Store" class="headerlink" title="The Store"></a>The Store</h3><p><strong>The Store</strong> 通过简单数据结构的形式存储了整个应用的状态. 这些状态只能通过分发的 Actions 来修改. 当 store 里的 state 更改时, store 会通知所有的观察者.</p>
+<h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><p><strong>Actions</strong> 是一种描述状态变化的声明方式. Actions 不包含任何代码, 它们传递给 store 并转发到reducer. Reducer 将会处理 action, 实现状态变更.</p>
+<h3 id="Reducers"><a href="#Reducers" class="headerlink" title="Reducers"></a>Reducers</h3><p><strong>Reducers</strong> 是一个纯函数, 基于当前 action 和 state, 创建一个新的 state.</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><ul>
+<li><a href="https://github.com/ReSwift/CounterExample" target="_blank" rel="external">CounterExample</a>: A very simple counter app implemented with ReSwift.</li>
+<li><a href="https://github.com/ReSwift/CounterExample-Navigation-TimeTravel" target="_blank" rel="external">CounterExample-Navigation-TimeTravel</a>: This example builds on the simple CounterExample app, adding time travel with <a href="https://github.com/ReSwift/ReSwift-Recorder" target="_blank" rel="external">ReSwiftRecorder</a> and routing with <a href="https://github.com/ReSwift/ReSwift-Router" target="_blank" rel="external">ReSwiftRouter</a>.</li>
+<li><a href="https://github.com/ReSwift/GitHubBrowserExample" target="_blank" rel="external">GitHubBrowserExample</a>: A real world example, involving authentication, network requests and navigation. Still WIP but should be the best resource for starting to adapt <code>ReSwift</code> in your own app.</li>
+<li><a href="https://github.com/Ben-G/Meet" target="_blank" rel="external">Meet</a>: A real world application being built with ReSwift - currently still very early on. It is not up to date with the latest version of ReSwift, but is the best project for demonstrating time travel.</li>
+</ul>
+<p>推荐看前三个.</p>
+<h3 id="为什么选用-ReSwift"><a href="#为什么选用-ReSwift" class="headerlink" title="为什么选用 ReSwift"></a>为什么选用 ReSwift</h3><p>前篇文章提到过, 因为 MVC 没有提供 <strong>状态管理</strong> 的解决方案, <strong>因为每个开发人员都使用他们个人喜欢的 状态传播 过程</strong>, 导致口径不统一, 不但会导致程序在 <strong>状态管理和传播</strong> 方面产生很高的复杂性, 还会导致写出后期难以理解和维护的代码.</p>
+<p>ReSwift 通过对编写程序的方式施加严格的限制来解决这些问题. 通过检查应用程序 <code>state data structure(状态数据结构)</code>, <code>action</code> 和 <code>reducer</code> 来减少了程序员错误的空间, 并易于写出方便理解的代码.</p>
+<h2 id="ReSwift-vs-ReatorKit"><a href="#ReSwift-vs-ReatorKit" class="headerlink" title="ReSwift vs ReatorKit"></a>ReSwift vs ReatorKit</h2><p>两者都是单向流数据架构, 而且都易于理解. 整个的数据流动方式比较相似, 不同点也和 Redux 与 Flux 的区别一样, 就是 state 是集中式管理还是分布式管理.</p>
+<h3 id="从-RxSwift-结合性来看"><a href="#从-RxSwift-结合性来看" class="headerlink" title="从 RxSwift 结合性来看"></a>从 RxSwift 结合性来看</h3><p>两者对比, 能看出来, ReactorKit 天生和 RxSwift 是一对. </p>
+<p>对于 ReSwift 来说, RxSwift 并不是必需.</p>
+<p>如果对于 RxSwift 有非常的执念, ReactorKit 使用起来更加顺手和优雅. (不知怎的, 我觉得如果把 ReactorKit 程序里的 Reactor 替换为 ViewModel, 好像也挺和谐的…)</p>
+<h3 id="从社区完善程度来看"><a href="#从社区完善程度来看" class="headerlink" title="从社区完善程度来看"></a>从社区完善程度来看</h3><p>ReSwift 的知名度和使用人数肯定要超过 ReactorKit. ReSwift 也相对成熟, ReSwift 配备了两个框架, <a href="https://github.com/ReSwift/ReSwift-Router" target="_blank" rel="external">ReSwift-Router</a> 和 <a href="https://github.com/ReSwift/ReSwift-Recorder" target="_blank" rel="external">ReSwift-Recorder</a>.</p>
+<ul>
+<li>ReSwift-Router 是一个路由框架 , 不过这个框架目前仍旧处于开发状态, 其 API 并不稳定. 在官方的 demo 里, <a href="https://github.com/ReSwift/GitHubBrowserExample" target="_blank" rel="external">GitHubBrowserExample</a>, 经常会出现 <code>fatalError(&quot;Route not supported!&quot;)</code>, <code>fatalError(&quot;Router could not proceed.&quot;)</code>等话. </li>
+<li>ReSwift-Recorder 是神奇的框架, 如其名, 跟一个录像机似的, 可以记录和回放 actions, ReSwift 的介绍里的 GIF 就是它的效果, 拖动进度条来控制 actions. 对于开发或者演示都特别有帮助. 感觉是个脑洞作品.</li>
+</ul>
+<p>当然了, 这都是辅助工具, 不管怎样, 总比 ReactorKit 没有其他工具要好.</p>
+<h3 id="从官方示例来看"><a href="#从官方示例来看" class="headerlink" title="从官方示例来看"></a>从官方示例来看</h3><p>我个人先看的 ReactorKit, 后看了 ReSwift, 前者的示例做的真好, ReSwift 虽然人多, 但也没见着示例做的多好.</p>
+<h3 id="从数据流的传递方式上来看"><a href="#从数据流的传递方式上来看" class="headerlink" title="从数据流的传递方式上来看"></a>从数据流的传递方式上来看</h3><p>ReactorKit 截取 <a href="https://github.com/devxoul/RxTodo" target="_blank" rel="external">RxTodo</a> 部分代码. </p>
+<pre><code>    // MARK: Binding
+
+    func bind(reactor: TaskListViewReactor) {
+        // Action
+        self.rx.viewDidLoad
+            .map { Reactor.Action.refresh }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+
+        self.editButtonItem.rx.tap
+            .map { Reactor.Action.toggleEditing }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+
+        self.tableView.rx.itemSelected
+            .filterNot(reactor.state.map { $0.isEditing })
+            .map { indexPath in .toggleTaskDone(indexPath) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+
+        self.tableView.rx.itemDeleted
+            .map(Reactor.Action.deleteTask)
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        ...
+</code></pre><p>在将 view 层绑定到 reactor 时, 既然 view 已经知道分发哪一个 <code>action: .map { Reactor.Action.refresh }</code>, 但却会重复出现 <code>.bind(to: reactor.action)</code>. 显式地声明一下我绑定到了 view 对应的 reactor 上. 当然了, 在作者文档里有写过, 全局状态可以用任何形式来存储, 可以是一个 reactor, 存在一种可能是我绑定到全局 reactor 还是 view 对应的 reactor. 但是总感觉这句话应该隐藏起来, 默认绑定的就是 view 对应的 reactor, 当绑定到全局 reactor 等情况时, 才显式地声明一下区别. 为了简洁, 默认的绑定应当隐藏. 但作者的实现是通过 RxSwift, 也正是受其影响, 需要显式地绑定和销毁.</p>
+<p>那么 ReSwift, 就相当简洁了, 最简单的就是点击一个按钮, 直接让全局的 store 分发一个 action. 集中式的好处, 不需要指定让哪一个来管理.</p>
+<pre class=" language-swift"><code class="language-swift">    <span class="token atrule">@IBAction</span> <span class="token keyword">func</span> <span class="token function">authenticateWithGitHub</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span>authenticateUser<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>还是看个人喜好, 两者写出来的程序都特别易懂. 背后的思路也都是通过严格限制状态可以被变更的方式, 让一个人写不同模块的方式, 或者不同人写不同模块的方式都是大致的, 便于后期理解与维护. </p>
+<p>不过对于喜欢 Rx 的同学来说, ReSwift 并不是必须, ReactorKit 和其更搭配.</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>两者的介绍已经结束, 欢迎交流. 最后一篇附上 ReSwift 和 RxSwift 的登录小 demo.</p>
+
     
 
     
+</div>
 
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
 
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
+                
 
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', 'http://on74pxnsk.bkt.clouddn.com/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yoursite.com/2017/09/06/iOS 单向数据流架构之 ReSwift/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//jianings-blog.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
 </script>
 
-    
 </div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/09/07/iOS 单向数据流架构之 ReSwift-RxSwift-Login-Example/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/09/05/iOS 单向数据流架构之 ReactorKit/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     

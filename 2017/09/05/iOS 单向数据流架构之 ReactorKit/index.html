@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            iOS 单向数据流架构之 ReactorKit | 
+        
+        Jianing&#39;s Blog
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="Jianing Wang">
+    <meta name="description" itemprop="description" content="前言系列文章第一篇, 关于 iOS 单向数据流架构介绍, 以及 ReactorKit 一款 Flux 风格的单向数据流框架.">
+    <meta name="keywords" content=",Swift,iOS,架构,ReactorKit">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png">
+    <link rel="icon" sizes="192x192" href="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
+    <link rel="apple-touch-icon" href="http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Jianing&#39;s Blog">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="iOS 单向数据流架构之 ReactorKit | Jianing&#39;s Blog">
+    <meta property="og:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png" />
+    <meta property="og:description" content="前言系列文章第一篇, 关于 iOS 单向数据流架构介绍, 以及 ReactorKit 一款 Flux 风格的单向数据流框架.">
+    <meta property="og:article:tag" content="Swift"> <meta property="og:article:tag" content="iOS"> <meta property="og:article:tag" content="架构"> <meta property="og:article:tag" content="ReactorKit"> 
+
+    
+        <meta property="article:published_time" content="9月 05, 2017" />
+        <meta property="article:modified_time" content="9月 07, 2017" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="iOS 单向数据流架构之 ReactorKit | Jianing&#39;s Blog">
+    <meta name="twitter:description" content="前言系列文章第一篇, 关于 iOS 单向数据流架构介绍, 以及 ReactorKit 一款 Flux 风格的单向数据流框架.">
+    <meta name="twitter:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://yoursite.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Jianing&#39;s Blog",
+        "logo": "http://on74pxnsk.bkt.clouddn.com/JN-blue.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Jianing Wang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://on74pxnsk.bkt.clouddn.com/JN-blue-medium.png"
+        },
+        "description": "Night gets darkest right before dawn"
+    },
+    "headline": "iOS 单向数据流架构之 ReactorKit",
+    "url": "http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html",
+    "datePublished": "9月 05, 2017",
+    "dateModified": "9月 07, 2017",
+    "description": "前言系列文章第一篇, 关于 iOS 单向数据流架构介绍, 以及 ReactorKit 一款 Flux 风格的单向数据流框架.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #311B92;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #4285F4 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #4285F4 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #4285F4 !important;
+  }
+
+  .toTop {
+    background: #FF3366 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #FF3366;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #FF3366;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #FF3366;
+  }
+
+  .post-toc a:hover {
+    color: #311B92;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构就是为了统一口径"><span class="post-toc-number">2.</span> <span class="post-toc-text">架构就是为了统一口径</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVC-的问题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">MVC 的问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#我在-MVVM-架构中遇到问题"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">我在 MVVM 架构中遇到问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于单向数据流架构"><span class="post-toc-number">3.</span> <span class="post-toc-text">关于单向数据流架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ReactorKit-简介"><span class="post-toc-number">4.</span> <span class="post-toc-text">ReactorKit 简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#View"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">View</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reactor"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Reactor</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#mutate"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">mutate()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#reduce"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">reduce()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#transform"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">transform()</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ReactorKit-高级用法"><span class="post-toc-number">5.</span> <span class="post-toc-text">ReactorKit 高级用法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Service"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Service</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Global-States"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">Global States</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#View-Communication"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">View Communication</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Testing"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">Testing</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#测试什么"><span class="post-toc-number">5.4.1.</span> <span class="post-toc-text">测试什么</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#View-测试"><span class="post-toc-number">5.4.2.</span> <span class="post-toc-text">View 测试</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Reactor-测试"><span class="post-toc-number">5.4.3.</span> <span class="post-toc-text">Reactor 测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conventions-约定俗成"><span class="post-toc-number">5.5.</span> <span class="post-toc-text">Conventions 约定俗成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#示例"><span class="post-toc-number">5.6.</span> <span class="post-toc-text">示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最后"><span class="post-toc-number">5.7.</span> <span class="post-toc-text">最后</span></a></li></ol></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://on74pxnsk.bkt.clouddn.com/blog-thumb-8.jpg)">
+    
+            <p class="article-headline-p">
+                iOS 单向数据流架构之 ReactorKit
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Jianing Wang</strong>
+        <span>9月 05, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACz0lEQVR42u3awVIjMQwE0Pz/T+9et4oCuqWwJPabU2oIM37mIKT248+V1wMbGxsbGxsbGxv7JdmP+Pr3+x9/9+NPk+9/usTgmfmasbGxsW9gt4v4DJxsxNdLn23u12vGxsbGvoedL/1r9qyAtYWwXjM2NjY2dsBLCluCbzcIGxsbG/u57UTSKsw2ERsbGxt7P1Rq24N8oL9fzw/O0rCxsbFfnr0Jen/r8y/n29jY2Ngvw26vtlBtRv9t0fpm5djY2NiHsmeMJABOCmHyzKjNSJ6MjY2NfQ07jwSSoX/SQrTgvBxiY2Nj38CetQc5fkZqC2fyFmxsbOxT2XmhmsW6+xi43W5sbGzsO9nDf+5HAUAbPMy2uMi3sbGxsd+cvccn7UQ+JHrWcAobGxv7TvasVWhHPG2jkkTOUSyNjY2NfTS7LWPJ/faIzyyKyO9jY2Njn8p+xNd+wDQrhO2mFyeVsLGxsY9gbwb9++34P3ewsbGxb2O3Q/92TJ83J/vREjY2NvYN7E24+xOBwWZ4VHdg2NjY2MexZ4UkH+XnDUkbMAzjAWxsbOyD2EkY0JaZpJEoyk+8QatUBBsbG/sN2fs2I4+HW9KsTaoPX2JjY2MfxG7HQ7Mytm858vAYGxsb+wZ28oJZ4WlbhXxolf/ZsLGxsW9g56951qHMdvDUxhLY2NjYN7NnhaENcWcRQlL26ngAGxsb+wj2vkjkW5Y8Z398Z9WBYWNjY78h++dGOfv7+fW0VAQbGxv7zdntP/pJ8UuGRLNyVX8TGxsb+1D2rEi0Q6J8+2afo6YIGxsb+2j2rGjlpPywZt4g1UMxbGxs7AvYSdFqh1B5OWy3rx2BYWNjY2PvD9nsY9320A82NjY2djJImsUGeWC8b42wsbGx72Enr9k0J3nzsG88sLGxsW9jz4LeWdw7K1FPOB6EjY2NfSj7ngsbGxsbGxsbGxv7Za6/Ma+RA/I7vQYAAAAASUVORK5CYII=">
+    
+</ul>
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/ReactorKit/">ReactorKit</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Swift/">Swift</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/iOS/">iOS</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/架构/">架构</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=iOS 单向数据流架构之 ReactorKit&url=http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=iOS 单向数据流架构之 ReactorKit&url=http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html&via=Jianing Wang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>系列文章第一篇, 关于 iOS 单向数据流架构介绍, 以及 ReactorKit 一款 Flux 风格的单向数据流框架.</p>
+<a id="more"></a>
+<h2 id="架构就是为了统一口径"><a href="#架构就是为了统一口径" class="headerlink" title="架构就是为了统一口径"></a>架构就是为了统一口径</h2><p>iOS 架构有传统的 MVC, 还有 MVVM, VIPER. 架构这个词很泛, 宽泛和泛滥的泛. 一来它的定义很宽泛. 二来, 关于架构的文章网上很泛滥, 这里只介绍两款受前端技术影响而产生的单向数据流架构 <a href="https://github.com/ReSwift/ReSwift" target="_blank" rel="external">ReSwift</a> 和 <a href="https://github.com/ReactorKit/ReactorKit" target="_blank" rel="external">ReactorKit</a>.</p>
+<p>我觉得, 在某个方面, <strong>架构就是为了统一口径</strong>. 在实际编程的切身体会, 以及看了 ReSwift 作者的介绍文章之后, 越发的这样觉得.</p>
+<p>为什么这么说? 先来看看 ReSwift 作者对于 MVC 的见解.</p>
+<h3 id="MVC-的问题"><a href="#MVC-的问题" class="headerlink" title="MVC 的问题"></a>MVC 的问题</h3><p>Model-View-Controller (MVC) 并不是一个全面的应用架构. 在典型的 Cocoa 应用程序中, <code>controller</code> 的复杂性很高，因为 MVC 并没有提供 <strong>状态管理</strong> 的解决方案, 这通常是应用程序开发中最复杂的问题.</p>
+<p>建立在 MVC 上的应用程序通常会在 <strong>状态管理和传播</strong> 方面产生很高的复杂性. 我们需要使用回调闭包, 代理, KVO 和通知来传递我们应用程序中的消息, 并确保所有相关的 <code>view</code> 具有最新状态.</p>
+<p>这种方法涉及很多手动步骤, 因此容易出错, 并且在复杂代码库中不能很好地扩展.</p>
+<p>它也会导致写出难以理解的代码, 因为依赖关系可以隐藏在 <code>ViewController</code> 的内部. 最后, 会遇到不一致的代码，<strong>因为每个开发人员都使用他们个人喜欢的 状态传播 过程</strong>. 虽然可以通过 style guides 和 code review 来规避此问题，但你无法自动验证遵守这些准则.</p>
+<h3 id="我在-MVVM-架构中遇到问题"><a href="#我在-MVVM-架构中遇到问题" class="headerlink" title="我在 MVVM 架构中遇到问题"></a>我在 MVVM 架构中遇到问题</h3><p>在学习了 RxSwift 之后决定尝试一下 MVVM 架构. 初来乍到, 总会遇到很多问题. 当时看了一些 <a href="http://community.rxswift.org" target="_blank" rel="external">官方社区</a> 推荐的 demo 以及一些其他的示例, 我发现 iOS 端的 MVVM 感觉一人一个写法 (虽然有点夸张). 但每种做法感觉总是不”全”, 碰上新问题, 这个示例的做法就不适用或者不优雅了. 自己一直改来改去, 没有办法形成一个统一的约定. 结合多个示例的做法, 改来改去, 反而把问题弄得更加复杂.</p>
+<p>所以亟待一个架构类的框架来统一口径.</p>
+<h2 id="关于单向数据流架构"><a href="#关于单向数据流架构" class="headerlink" title="关于单向数据流架构"></a>关于单向数据流架构</h2><p><a href="https://facebook.github.io/flux/" target="_blank" rel="external">Flux</a> 和 <a href="https://github.com/reactjs/redux" target="_blank" rel="external">Redux</a> 是前端的两种架构. 两者的都是单向数据流的架构. 关于两者的介绍, 网上的文章太多, 非狭义前端人员就不多说了. <a href="https://github.com/ReSwift/ReSwift" target="_blank" rel="external">ReSwift</a> 是 Redux 版的实现, 而 <a href="https://github.com/ReactorKit/ReactorKit" target="_blank" rel="external">ReactorKit</a> 是一款 Flux 风格的框架.</p>
+<h2 id="ReactorKit-简介"><a href="#ReactorKit-简介" class="headerlink" title="ReactorKit 简介"></a>ReactorKit 简介</h2><p><a href="https://github.com/ReactorKit/ReactorKit" target="_blank" rel="external">ReactorKit</a> 并不”火”, Github “也”只有 600 多的赞, 国内知之甚少, 更不用说实际应用了.</p>
+<p>官方文档是这样写的: ReactorKit 结合了 Flux 和响应式编程. </p>
+<p>那么, 对于 ReactorKit 是否是严格符合 Flux 规范, 我就不得知了. </p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ud-01.jpg" alt="blog-ud-01"></p>
+<h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>广义的 <em>View</em> 包含了基本的控件, <code>ViewController</code>, <code>cell</code>等. View 层负责展示数据, 并把用户的输入绑定到 <code>action stream(操作流)</code>上, 以及把 view 的 <code>state(状态)</code> 绑定到每个 UI 组件上.</p>
+<p>View 层没有业务逻辑. 只管怎么把自己的状态变化映射到 <code>action stream(操作流)</code> , 怎么把 <code>state stream(状态流)</code> 变化映射给自己. 连接两者的中间通路就是 <code>RxSwift</code>. </p>
+<p>当 <code>reactor</code> 的状态变化后, 会调用 <code>bind(reactor:)</code> 方法.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">bind</span><span class="token punctuation">(</span>reactor<span class="token punctuation">:</span> <span class="token builtin">ProfileViewReactor</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// action (View -> Reactor)</span>
+  refreshButton<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>tap<span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> <span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token punctuation">.</span>refresh <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> reactor<span class="token punctuation">.</span>action<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">// state (Reactor -> View)</span>
+  reactor<span class="token punctuation">.</span>state<span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> $<span class="token number">0</span><span class="token punctuation">.</span>isFollowing <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> followButton<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>isSelected<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h3><figcaption>独立于 UI 层, 负责管理 <code>view</code> 的状态. 作者强调, <code>Reactor</code> 的最重要的角色是从 UI 层里分离出 <em>控制流</em>. 每个 <code>view</code> 有与之相关的 <code>reactor</code> 并且将所有的逻辑委托给 <code>reactor</code>. 这样做的好处是, <code>reactor</code> 对于 <code>view</code> 没有依赖性, 容易测试.</p></figcaption><pre class=" language-Reactor</code>"><code class="language-Reactor</code>"><p>其实我觉得这个玩意可以对比 ViewModel 在 MVVM 里的角色. </p>
+<pre><code class="swift">class ProfileViewReactor: Reactor {
+  // represent user actions
+  enum Action {
+    case refreshFollowingStatus(Int)
+    case follow(Int)
+  }
+
+  // represent state changes
+  enum Mutation {
+    case setFollowing(Bool)
+  }
+
+  // represents the current view state
+  struct State {
+    var isFollowing: Bool = false
+  }
+
+  let initialState: State = State()
+}
+</code></pre>
+<p><code>Action</code> 代表一个用户交互过程, 例如用户刷新了一下, 点击了 follow 按钮等. <code>State</code> 就是 view 的状态. <code>Mutation</code> 是两者的桥梁. 一个 <code>Reactor</code> 将 <code>action stream(操作流)</code> 转化为 <code>state stream(状态流)</code> 分为两步: <code>mutate()</code> and <code>reduce()</code></pre>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ud-02.jpg" alt="blog-ud-02"></p>
+<h4 id="mutate"><a href="#mutate" class="headerlink" title="mutate()"></a><code>mutate()</code></h4><p><code>mutate()</code> 接受一个 <code>Action</code> 并生成一个 <code>Observable&lt;Mutation&gt;</code>.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">mutate</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token builtin">Action</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span>
+</code></pre>
+<p>每一个 <code>side effect(副作用)</code> 都放在这个方法里, 例如异步操作或者调用 API.</p>
+<blockquote>
+<p>小插曲, 看 Ray 家的 RxSwift 一书时, 会频繁出现在视野里. <code>side effect</code> 到底是个啥, 应该怎么翻译?<br>应该翻译成 “副作用”. 但是不要先入为主的以为就是贬义词. 关于这个, 我专门搜过, 可以看一下<a href="https://www.zhihu.com/question/30779564" target="_blank" rel="external">知乎</a>上的讨论.<br>Side effects are any change to the state outside of the current scope.<br>举个例子 <code>Any time you modify data stored on disk or update the text of a label on screen, you cause side effects.</code><br><strong>副作用</strong> 不是坏的东西, <strong>编程的最终目的是产生副作用</strong>. 你的程序执行以后, 世界需要发生改变, 如果你的程序运行完之后, 一点效果也没产生, 那么这就是一个无用的程序.</p>
+</blockquote>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">mutate</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token builtin">Action</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> action <span class="token punctuation">{</span>
+  <span class="token keyword">case</span> <span class="token keyword">let</span> <span class="token punctuation">.</span><span class="token function">refreshFollowingStatus</span><span class="token punctuation">(</span>userID<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">// receive an action</span>
+    <span class="token keyword">return</span> <span class="token builtin">UserAPI</span><span class="token punctuation">.</span><span class="token function">isFollowing</span><span class="token punctuation">(</span>userID<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// create an API stream</span>
+      <span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> <span class="token punctuation">(</span>isFollowing<span class="token punctuation">:</span> <span class="token builtin">Bool</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Mutation</span> <span class="token keyword">in</span>
+        <span class="token keyword">return</span> <span class="token builtin">Mutation</span><span class="token punctuation">.</span><span class="token function">setFollowing</span><span class="token punctuation">(</span>isFollowing<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// convert to Mutation stream</span>
+      <span class="token punctuation">}</span>
+
+  <span class="token keyword">case</span> <span class="token keyword">let</span> <span class="token punctuation">.</span><span class="token function">follow</span><span class="token punctuation">(</span>userID<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token builtin">UserAPI</span><span class="token punctuation">.</span><span class="token function">follow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> <span class="token number">_</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Mutation</span> <span class="token keyword">in</span>
+        <span class="token keyword">return</span> <span class="token builtin">Mutation</span><span class="token punctuation">.</span><span class="token function">setFollowing</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a><code>reduce()</code></h4><p><code>reduce()</code> 根据先前的旧 <code>State</code> 和一个 <code>Mutation</code> 来生成新的 <code>State</code>.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">reduce</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token builtin">State</span><span class="token punctuation">,</span> mutation<span class="token punctuation">:</span> <span class="token builtin">Mutation</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">State</span>
+</code></pre>
+<p>这个方法就是一个纯函数. 它应当同步地返回一个新 <code>State</code>. 这个方法不能有任何 <code>side effect(副作用)</code> 发生.</p>
+<h4 id="transform"><a href="#transform" class="headerlink" title="transform()"></a><code>transform()</code></h4><p><code>transform()</code> 对每个 <code>stream(流)</code> 进行变换.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">transform</span><span class="token punctuation">(</span>action<span class="token punctuation">:</span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Action</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Action</span><span class="token operator">></span>
+<span class="token keyword">func</span> <span class="token function">transform</span><span class="token punctuation">(</span>mutation<span class="token punctuation">:</span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span>
+<span class="token keyword">func</span> <span class="token function">transform</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">State</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">State</span><span class="token operator">></span>
+</code></pre>
+<h2 id="ReactorKit-高级用法"><a href="#ReactorKit-高级用法" class="headerlink" title="ReactorKit 高级用法"></a>ReactorKit 高级用法</h2><h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>既然前面都没有业务逻辑, 那么不难猜出, Service 层就是负责了实际的业务逻辑. Reactor 是 View 和 Service 的中间层. 工作流程是, Reactor 从 View 层接收到用户的操作, Reactor 调用 Service 的逻辑. Service 发出一个网络请求然后把网络响应返回给 Reactor. 然后 Reactor 根据响应创建一个 <code>mutation stream</code>.</p>
+<pre class=" language-swift"><code class="language-swift">protocol <span class="token builtin">UserServiceType</span> <span class="token punctuation">{</span>
+  <span class="token keyword">func</span> <span class="token function">user</span><span class="token punctuation">(</span>id<span class="token punctuation">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">User</span><span class="token operator">></span>
+  <span class="token keyword">func</span> <span class="token function">follow</span><span class="token punctuation">(</span>id<span class="token punctuation">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Void</span><span class="token operator">></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span><span class="token punctuation">:</span> <span class="token builtin">Service</span><span class="token punctuation">,</span> <span class="token builtin">UserServiceType</span> <span class="token punctuation">{</span>
+  <span class="token keyword">func</span> <span class="token function">user</span><span class="token punctuation">(</span>id<span class="token punctuation">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">User</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">func</span> <span class="token function">follow</span><span class="token punctuation">(</span>id<span class="token punctuation">:</span> <span class="token builtin">Int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Void</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="Global-States"><a href="#Global-States" class="headerlink" title="Global States"></a>Global States</h3><p>不同于 Redux, ReactorKit 并没有定义一个全局状态. 这意味着你可以使用任何东西来管理全局状态, 比如 <code>Variable</code>, <code>PublishSubject</code>, 甚至是一个 <code>Reactor</code>. ReactorKit 并不强制你有一个全局状态.</p>
+<p><code>Global state(全局状态)</code> 并没有 <strong>Action → Mutation → State</strong> 流. 所以你得使用 <code>transform(mutation:)</code> 把全局状态变换为一个 <code>mutation</code>. 假设我们有一个全局的 <code>Variable</code> 存储了当前登录的用户. 当 <code>currentUser</code> 变化时, 你需要发射一个 <code>Mutation.setUser(User?)</code> 事件.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">var</span> currentUser<span class="token punctuation">:</span> <span class="token builtin">Variable</span><span class="token operator">&lt;</span><span class="token builtin">User</span><span class="token operator">></span> <span class="token comment" spellcheck="true">// global state</span>
+
+<span class="token keyword">func</span> <span class="token function">transform</span><span class="token punctuation">(</span>mutation<span class="token punctuation">:</span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Observable</span><span class="token operator">&lt;</span><span class="token builtin">Mutation</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token builtin">Observable</span><span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>mutation<span class="token punctuation">,</span> currentUser<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token builtin">Mutation</span><span class="token punctuation">.</span>setUser<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="View-Communication"><a href="#View-Communication" class="headerlink" title="View Communication"></a>View Communication</h3><p>在多个 view 之间通信, 通常的做法是回调闭包或者代理模式. ReactorKit 的建议是用 <a href="https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Reactive.swift" target="_blank" rel="external">reacitve extensions</a>. <code>ControlEvent</code> 最常用的例子是 <code>UIButton.rx.tap.</code> 关键是你把自定义 view 也看做 UIButton 或者 UILabel.</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ud-03.jpg" alt="blog-ud-03"></p>
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><p>ReactorKit 内置了测试功能. 你可以非常轻松地测试 view 和 reactor.</p>
+<h4 id="测试什么"><a href="#测试什么" class="headerlink" title="测试什么"></a>测试什么</h4><p>首先, 你得决定哪些需要测试.</p>
+<ul>
+<li>View<ul>
+<li>Action: 一个 action 是否被送到了合适的 reactor 那里.</li>
+<li>State: 一个 view 的属性是否被新的 state 合理地改变了.</li>
+</ul>
+</li>
+<li>Reactor<ul>
+<li>State: 一个 state 根据一个 action 做出了合适的改变.</li>
+</ul>
+</li>
+</ul>
+<h4 id="View-测试"><a href="#View-测试" class="headerlink" title="View 测试"></a>View 测试</h4><p>View 可以被 <code>stub(桩)</code> reactor 测试. 一个 Reactor 具有 <code>stub</code> 属性, 可以打印 <code>action</code> 日志和强制改变状态. 如果打开了 <code>stub</code> 功能, <code>mutate()</code> 和 <code>reduce()</code> 都不执行. 一个 <code>Stub</code> 拥有三个属性</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">var</span> isEnabled<span class="token punctuation">:</span> <span class="token builtin">Bool</span> <span class="token punctuation">{</span> <span class="token keyword">get</span> <span class="token keyword">set</span> <span class="token punctuation">}</span>
+<span class="token keyword">var</span> state<span class="token punctuation">:</span> <span class="token builtin">Variable</span><span class="token operator">&lt;</span><span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">State</span><span class="token operator">></span> <span class="token punctuation">{</span> <span class="token keyword">get</span> <span class="token punctuation">}</span>
+<span class="token keyword">var</span> action<span class="token punctuation">:</span> <span class="token builtin">ActionSubject</span><span class="token operator">&lt;</span><span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token operator">></span> <span class="token punctuation">{</span> <span class="token keyword">get</span> <span class="token punctuation">}</span>
+<span class="token keyword">var</span> actions<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token keyword">get</span> <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// recorded actions</span>
+</code></pre>
+<p>下面是官方给的测试用例的示例:</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">testAction_refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 1. prepare a stub reactor</span>
+  <span class="token keyword">let</span> reactor <span class="token operator">=</span> <span class="token function">MyReactor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  reactor<span class="token punctuation">.</span>stub<span class="token punctuation">.</span>isEnabled <span class="token operator">=</span> <span class="token boolean">true</span>
+
+  <span class="token comment" spellcheck="true">// 2. prepare a view with a stub reactor</span>
+  <span class="token keyword">let</span> view <span class="token operator">=</span> <span class="token function">MyView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  view<span class="token punctuation">.</span>reactor <span class="token operator">=</span> reactor
+
+  <span class="token comment" spellcheck="true">// 3. send an user interaction programatically</span>
+  view<span class="token punctuation">.</span>refreshControl<span class="token punctuation">.</span><span class="token function">sendActions</span><span class="token punctuation">(</span><span class="token keyword">for</span><span class="token punctuation">:</span> <span class="token punctuation">.</span>valueChanged<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">// 4. assert actions</span>
+  <span class="token function">XCTAssertEqual</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>stub<span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token builtin">last</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>refresh<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">testState_isLoading</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 1. prepare a stub reactor</span>
+  <span class="token keyword">let</span> reactor <span class="token operator">=</span> <span class="token function">MyReactor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  reactor<span class="token punctuation">.</span>stub<span class="token punctuation">.</span>isEnabled <span class="token operator">=</span> <span class="token boolean">true</span>
+
+  <span class="token comment" spellcheck="true">// 2. prepare a view with a stub reactor</span>
+  <span class="token keyword">let</span> view <span class="token operator">=</span> <span class="token function">MyView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  view<span class="token punctuation">.</span>reactor <span class="token operator">=</span> reactor
+
+  <span class="token comment" spellcheck="true">// 3. set a stub state</span>
+  reactor<span class="token punctuation">.</span>stub<span class="token punctuation">.</span>state<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token builtin">MyReactor</span><span class="token punctuation">.</span><span class="token function">State</span><span class="token punctuation">(</span>isLoading<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">// 4. assert view properties</span>
+  <span class="token function">XCTAssertEqual</span><span class="token punctuation">(</span>view<span class="token punctuation">.</span>activityIndicator<span class="token punctuation">.</span>isAnimating<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="Reactor-测试"><a href="#Reactor-测试" class="headerlink" title="Reactor 测试"></a>Reactor 测试</h4><p>前面提到了, Reactor 独立于 View 层, 所以可以独立测试.</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">testIsBookmarked</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> reactor <span class="token operator">=</span> <span class="token function">MyReactor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  reactor<span class="token punctuation">.</span>action<span class="token punctuation">.</span><span class="token function">onNext</span><span class="token punctuation">(</span><span class="token punctuation">.</span>toggleBookmarked<span class="token punctuation">)</span>
+  <span class="token function">XCTAssertEqual</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>currentState<span class="token punctuation">.</span>isBookmarked<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+  reactor<span class="token punctuation">.</span>action<span class="token punctuation">.</span><span class="token function">onNext</span><span class="token punctuation">(</span><span class="token punctuation">.</span>toggleBookmarked<span class="token punctuation">)</span>
+  <span class="token function">XCTAssertEqual</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>currentState<span class="token punctuation">.</span>isBookmarked<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>有些时候, 一个单一的 action 可以改变一个 state 多次. 例如, 一个 <code>.refresh</code> 刷新操作, 会将 <code>state.isLoading</code> 设置为 <code>true</code>, 结束刷新之后又会设置为 <code>false</code>. 在这种情况下, 很难用 <code>currentState</code> 去测试 <code>state.isLoading</code>, 所以你需要用 <a href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="external">RxTest</a> 或者 <a href="https://github.com/devxoul/RxExpect" target="_blank" rel="external">RxExpect</a>. 这有一个简单的 RxExpect 测试用例:</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">func</span> <span class="token function">testIsLoading</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">RxExpect</span><span class="token punctuation">(</span><span class="token string">"it should change isLoading"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> test <span class="token keyword">in</span>
+    <span class="token keyword">let</span> reactor <span class="token operator">=</span> test<span class="token punctuation">.</span><span class="token function">retain</span><span class="token punctuation">(</span><span class="token function">MyReactor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    test<span class="token punctuation">.</span><span class="token function">input</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>action<span class="token punctuation">,</span> <span class="token punctuation">[</span>
+      <span class="token function">next</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>refresh<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// send .refresh at 100 scheduler time</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    test<span class="token punctuation">.</span><span class="token function">assert</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>state<span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> $<span class="token number">0</span><span class="token punctuation">.</span>isLoading <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">since</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// values since 100 scheduler time</span>
+      <span class="token punctuation">.</span><span class="token function">assert</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        <span class="token boolean">true</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true">// just after .refresh</span>
+        <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// after refreshing</span>
+      <span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="Conventions-约定俗成"><a href="#Conventions-约定俗成" class="headerlink" title="Conventions 约定俗成"></a>Conventions 约定俗成</h3><p>ReactorKit 建议你在 view 的外面创建 reactor, 并把它传递给 view.</p>
+<p>提倡的做法:</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> view <span class="token operator">=</span> <span class="token function">MyView</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+view<span class="token punctuation">.</span>reactor <span class="token operator">=</span> <span class="token function">MyViewReactor</span><span class="token punctuation">(</span>provider<span class="token punctuation">:</span> provider<span class="token punctuation">)</span>
+</code></pre>
+<p>不提倡的做法:</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">class</span> <span class="token class-name">MyView</span><span class="token punctuation">:</span> <span class="token builtin">UIView</span><span class="token punctuation">,</span> <span class="token builtin">View</span> <span class="token punctuation">{</span>
+  <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">self</span><span class="token punctuation">.</span>reactor <span class="token operator">=</span> <span class="token function">MyViewReactor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><ul>
+<li><a href="https://github.com/ReactorKit/ReactorKit/tree/master/Examples/Counter" target="_blank" rel="external">Counter</a>: The most simple and basic example of ReactorKit</li>
+<li><a href="https://github.com/ReactorKit/ReactorKit/tree/master/Examples/GitHubSearch" target="_blank" rel="external">GitHub Search</a>: A simple application which provides a GitHub repository search</li>
+<li><a href="https://github.com/devxoul/RxTodo" target="_blank" rel="external">RxTodo</a>: iOS Todo Application using ReactorKit</li>
+<li><a href="https://github.com/devxoul/Cleverbot" target="_blank" rel="external">Cleverbot</a>: iOS Messaging Application using Cleverbot and ReactorKit</li>
+<li><a href="https://github.com/devxoul/Drrrible" target="_blank" rel="external">Drrrible</a>: Dribbble for iOS using ReactorKit (<a href="https://itunes.apple.com/us/app/drrrible/id1229592223?mt=8" target="_blank" rel="external">App Store</a>)</li>
+<li><a href="https://github.com/cruisediary/Passcode" target="_blank" rel="external">Passcode</a>: Passcode for iOS RxSwift, ReactorKit and IGListKit example</li>
+</ul>
+<p>官方推荐的几个程序都应该好好看看. 尤其是 RxTodo 和 Drrrible. 作者的程序代码简洁, 有着很好的 POP 思想, 不管是最后在实践中用不用 ReactorKit, 都值得一看. ( RxTodo 比 ReactorKit 的 star 都多, 好尴尬… 不过前者之前出名并不是因为用了 ReactorKit)</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>ReactorKit 的介绍就到这里了. 关于 ReSwift 的文章在后一篇.</p>
+<blockquote>
+<p>ReactorKit 的作者是一个帅气的韩国小哥, 看简历貌似高中就辍学搞程序了. <a href="https://github.com/devxoul" target="_blank" rel="external">GitHub</a> 上很多项目, 之前最早看过应该是 <a href="https://github.com/devxoul/Then" target="_blank" rel="external">Then</a>, 还有各种语法糖, 什么 elegant 啊, 什么 the most sexy way 啊, 看来韩国银总是喜欢优雅漂亮的东西啊…</p>
+</blockquote>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yoursite.com/2017/09/05/iOS 单向数据流架构之 ReactorKit/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//jianings-blog.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/09/06/iOS 单向数据流架构之 ReSwift/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://on74pxnsk.bkt.clouddn.com/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="http://on74pxnsk.bkt.clouddn.com/avatar.jpg" alt="Jianing Wang's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        wjnmailg@gmail.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto: wjnmailg@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">8</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时轴">
+                
+                    <i class="material-icons sidebar-material-icons">access_time</i>
+                
+                时轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                标签
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/gallery" title="映像">
+                
+                    <i class="material-icons sidebar-material-icons">collections</i>
+                
+                映像
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/about" title="关于">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友链">
+                
+                    <i class="material-icons sidebar-material-icons">share</i>
+                
+                友链
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/SteveWjnmailg" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>Jianing's Blog
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#2299DD'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #2299DD, 0 0 15px #2299DD'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#2299DD',
+        'border-left-color': '#2299DD'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//jianings-blog.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
