@@ -511,32 +511,34 @@
 <p>当然了, 这都是辅助工具, 不管怎样, 总比 ReactorKit 没有其他工具要好.</p>
 <h3 id="从官方示例来看"><a href="#从官方示例来看" class="headerlink" title="从官方示例来看"></a>从官方示例来看</h3><p>我个人先看的 ReactorKit, 后看了 ReSwift, 前者的示例做的真好, ReSwift 虽然人多, 但也没见着示例做的多好.</p>
 <h3 id="从数据流的传递方式上来看"><a href="#从数据流的传递方式上来看" class="headerlink" title="从数据流的传递方式上来看"></a>从数据流的传递方式上来看</h3><p>ReactorKit 截取 <a href="https://github.com/devxoul/RxTodo" target="_blank" rel="external">RxTodo</a> 部分代码. </p>
-<pre><code>    // MARK: Binding
+<pre class=" language-swift"><code class="language-swift">    <span class="token comment" spellcheck="true">// MARK: Binding</span>
 
-    func bind(reactor: TaskListViewReactor) {
-        // Action
-        self.rx.viewDidLoad
-            .map { Reactor.Action.refresh }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+    <span class="token keyword">func</span> <span class="token function">bind</span><span class="token punctuation">(</span>reactor<span class="token punctuation">:</span> <span class="token builtin">TaskListViewReactor</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// Action</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>rx<span class="token punctuation">.</span>viewDidLoad
+            <span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> <span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token punctuation">.</span>refresh <span class="token punctuation">}</span>
+            <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> reactor<span class="token punctuation">.</span>action<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
 
-        self.editButtonItem.rx.tap
-            .map { Reactor.Action.toggleEditing }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+        <span class="token keyword">self</span><span class="token punctuation">.</span>editButtonItem<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>tap
+            <span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> <span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token punctuation">.</span>toggleEditing <span class="token punctuation">}</span>
+            <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> reactor<span class="token punctuation">.</span>action<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
 
-        self.tableView.rx.itemSelected
-            .filterNot(reactor.state.map { $0.isEditing })
-            .map { indexPath in .toggleTaskDone(indexPath) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+        <span class="token keyword">self</span><span class="token punctuation">.</span>tableView<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>itemSelected
+            <span class="token punctuation">.</span><span class="token function">filterNot</span><span class="token punctuation">(</span>reactor<span class="token punctuation">.</span>state<span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> $<span class="token number">0</span><span class="token punctuation">.</span>isEditing <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token builtin">map</span> <span class="token punctuation">{</span> indexPath <span class="token keyword">in</span> <span class="token punctuation">.</span><span class="token function">toggleTaskDone</span><span class="token punctuation">(</span>indexPath<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+            <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> reactor<span class="token punctuation">.</span>action<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
 
-        self.tableView.rx.itemDeleted
-            .map(Reactor.Action.deleteTask)
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        ...
-</code></pre><p>在将 view 层绑定到 reactor 时, 既然 view 已经知道分发哪一个 <code>action: .map { Reactor.Action.refresh }</code>, 但却会重复出现 <code>.bind(to: reactor.action)</code>. 显式地声明一下我绑定到了 view 对应的 reactor 上. 当然了, 在作者文档里有写过, 全局状态可以用任何形式来存储, 可以是一个 reactor, 存在一种可能是我绑定到全局 reactor 还是 view 对应的 reactor. 但是总感觉这句话应该隐藏起来, 默认绑定的就是 view 对应的 reactor, 当绑定到全局 reactor 等情况时, 才显式地声明一下区别. 为了简洁, 默认的绑定应当隐藏. 但作者的实现是通过 RxSwift, 也正是受其影响, 需要显式地绑定和销毁.</p>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>tableView<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>itemDeleted
+            <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token builtin">Reactor</span><span class="token punctuation">.</span><span class="token builtin">Action</span><span class="token punctuation">.</span>deleteTask<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> reactor<span class="token punctuation">.</span>action<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>在将 view 层绑定到 reactor 时, 既然 view 已经知道分发哪一个 <code>action: .map { Reactor.Action.refresh }</code>, 但却会重复出现 <code>.bind(to: reactor.action)</code>. 显式地声明一下我绑定到了 view 对应的 reactor 上. 当然了, 在作者文档里有写过, 全局状态可以用任何形式来存储, 可以是一个 reactor, 存在一种可能是我绑定到全局 reactor 还是 view 对应的 reactor. 但是总感觉这句话应该隐藏起来, 默认绑定的就是 view 对应的 reactor, 当绑定到全局 reactor 等情况时, 才显式地声明一下区别. 为了简洁, 默认的绑定应当隐藏. 但作者的实现是通过 RxSwift, 也正是受其影响, 需要显式地绑定和销毁.</p>
 <p>那么 ReSwift, 就相当简洁了, 最简单的就是点击一个按钮, 直接让全局的 store 分发一个 action. 集中式的好处, 不需要指定让哪一个来管理.</p>
 <pre class=" language-swift"><code class="language-swift">    <span class="token atrule">@IBAction</span> <span class="token keyword">func</span> <span class="token function">authenticateWithGitHub</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span>authenticateUser<span class="token punctuation">)</span>
@@ -699,7 +701,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/11/">十一月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/10/">十月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -717,7 +719,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">8</span></a>
+                <a class="sidebar_archives-link" href="/categories/Inbox/">Inbox<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Thoughts/">Thoughts<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Tips/">Tips<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/iOS/">iOS<span class="sidebar_archives-count">9</span></a>
             </ul>
         </li>
         
