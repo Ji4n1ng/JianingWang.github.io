@@ -61,11 +61,11 @@
     
       <category term="iOS" scheme="http://yoursite.com/tags/iOS/"/>
     
+      <category term="ReSwift" scheme="http://yoursite.com/tags/ReSwift/"/>
+    
       <category term="架构" scheme="http://yoursite.com/tags/%E6%9E%B6%E6%9E%84/"/>
     
       <category term="ReactorKit" scheme="http://yoursite.com/tags/ReactorKit/"/>
-    
-      <category term="ReSwift" scheme="http://yoursite.com/tags/ReSwift/"/>
     
   </entry>
   
