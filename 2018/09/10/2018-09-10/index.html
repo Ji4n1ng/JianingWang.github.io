@@ -12,7 +12,7 @@
     
     <title>
         
-            RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改 | 
+            树莓派 + OpenWrt 打造无线路由科学上网 | 
         
         Jianing&#39;s Blog
     </title>
@@ -37,8 +37,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="Jianing Wang">
-    <meta name="description" itemprop="description" content="前言在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.">
-    <meta name="keywords" content=",RxSwift,Swift,iOS">
+    <meta name="description" itemprop="description" content="前言把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。">
+    <meta name="keywords" content=",Raspberry">
 
     <!-- Site Verification -->
     
@@ -67,26 +67,26 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://yoursite.com">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改 | Jianing&#39;s Blog">
+    <meta property="og:title" content="树莓派 + OpenWrt 打造无线路由科学上网 | Jianing&#39;s Blog">
     <meta property="og:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png" />
-    <meta property="og:description" content="前言在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.">
-    <meta property="og:article:tag" content="RxSwift"> <meta property="og:article:tag" content="Swift"> <meta property="og:article:tag" content="iOS"> 
+    <meta property="og:description" content="前言把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。">
+    <meta property="og:article:tag" content="Raspberry"> 
 
     
-        <meta property="article:published_time" content="9月 04, 2017" />
-        <meta property="article:modified_time" content="9月 07, 2017" />
+        <meta property="article:published_time" content="9月 10, 2018" />
+        <meta property="article:modified_time" content="9月 10, 2018" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改 | Jianing&#39;s Blog">
-    <meta name="twitter:description" content="前言在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.">
+    <meta name="twitter:title" content="树莓派 + OpenWrt 打造无线路由科学上网 | Jianing&#39;s Blog">
+    <meta name="twitter:description" content="前言把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。">
     <meta name="twitter:image" content="http://on74pxnsk.bkt.clouddn.com/JN-blue.png">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://yoursite.com" />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2018/09/10/2018-09-10/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -112,11 +112,11 @@
         },
         "description": "Night gets darkest right before dawn"
     },
-    "headline": "RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改",
-    "url": "http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html",
-    "datePublished": "9月 04, 2017",
-    "dateModified": "9月 07, 2017",
-    "description": "前言在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.",
+    "headline": "树莓派 + OpenWrt 打造无线路由科学上网",
+    "url": "http://yoursite.com/2018/09/10/2018-09-10/index.html",
+    "datePublished": "9月 10, 2018",
+    "dateModified": "9月 10, 2018",
+    "description": "前言把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "http://yoursite.com"
@@ -336,7 +336,7 @@
 
     
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我遇见的问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">我遇见的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原因"><span class="post-toc-number">4.</span> <span class="post-toc-text">原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决办法"><span class="post-toc-number">5.</span> <span class="post-toc-text">解决办法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#双向绑定的实现"><span class="post-toc-number">6.</span> <span class="post-toc-text">双向绑定的实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">7.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备"><span class="post-toc-number">2.</span> <span class="post-toc-text">准备</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写入镜像"><span class="post-toc-number">3.</span> <span class="post-toc-text">写入镜像</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置路由器"><span class="post-toc-number">4.</span> <span class="post-toc-text">设置路由器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#无线网络功能激活"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">无线网络功能激活</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加-WAN-口"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">添加 WAN 口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#将物理网口修改为-WAN-口"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">将物理网口修改为 WAN 口</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#给树莓派安装科学上网软件"><span class="post-toc-number">5.</span> <span class="post-toc-text">给树莓派安装科学上网软件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#树莓派-DNS-设置"><span class="post-toc-number">6.</span> <span class="post-toc-text">树莓派 DNS 设置</span></a></li></ol>
         <!--
         <li class="mdl-menu__item">
             Some Action
@@ -362,10 +362,10 @@
     <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://on74pxnsk.bkt.clouddn.com/blog-thumb-7.jpg)">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://on74pxnsk.bkt.clouddn.com/blog-thumb-13.jpg)">
     
             <p class="article-headline-p">
-                RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改
+                树莓派 + OpenWrt 打造无线路由科学上网
             </p>
         </div>
 
@@ -384,7 +384,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>Jianing Wang</strong>
-        <span>9月 04, 2017</span>
+        <span>9月 10, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -406,7 +406,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEKklEQVR42u3aS3LbMBAFQN//0skBHNHvzbBiEWqsUrRCAM0FMJ+vP0YwvhBgwoQJEyZMBiZMmDC9PdNXPF79/vvzf0z54vmr31y/+XqF129I9ogJEyZMmM5jyjeQbON628lfZ3DJXMUeMWHChAnTcUzXh31y8OdbvesjzT7J9R4xYcKECdMnMyVH8vWG81naVeXXBUyYMGHChKllSpbbplxnATYmTJgwYcJ0V6GxPbzbxG4bEm9+iQkTJkyYzmZqD+Yn/vsX+pswYcKECdMbMM3GJrxMmlnzK0WbAi72iAkTJkyYjmCaFQjbAzgvbeZJ4X0AvMqFY8KECROmhzDlL9pfCFqgaDMlXF6axYQJEyZMZzDlbTr58TwrZybNQPk1JU9P1+VMTJgwYcL0QKZ2+nvbZWafaha657vAhAkTJkxnMO1D3Dbtmz9JQNtrSrF3TJgwYcJ0BNOmOTVJp7bbu+sK0mJhwoQJE6azmZIwOE/m5mnZtgWnvZrkgTEmTJgwYTqVqS0Tzoqas5Fse9ZsVJczMWHChAnTQUx5ujYpEG7+uglxZ8VaTJgwYcJ0HtO9jTgzoPyTtGFwu2ZMmDBhwvQ5TPuJ61CzDGs3B3/UFIsJEyZMmI5jmgW0s2bQNomcpHo30HXVFxMmTJgwPYqpLUkmgfEsTTxrBko+ZA2KCRMmTJiOY2qnb4E2yd992JyvHxMmTJgwncTUvigPR9uy5ea6cO96MGHChAnTSUxtwHlXGTJ/f5uMnl0IMGHChAnTqUxtYrRt3GnfvGnZuXn9mDBhwoTpCKZNq01eYmwD0fzjJTMOk9GYMGHChOkgpllZsS1etk057QfI3zlM8mLChAkTpscy5UXHzSbzzd9VFt2sHBMmTJgwncHUJlLbTW7KlvURXiZzf0grY8KECROmD2CahZHJUvZNQgnidXF02MmLCRMmTJgexbRpJ83J8lny8DV/flvjDiZMmDBhejjTrOGm/f2shfSactPWE4W+mDBhwoTpsUx5wJkspU0NzwqTs1JoHdJjwoQJE6ajmdrp2xRq/hnyq8CMaXUhwIQJEyZMD2SaBa75e67f2R7zeUK5bhXChAkTJkwHMc2SrZvneSibB9izy0TUuIMJEyZMmB7LlGxsdqhvLhl5mHpv0RQTJkyYMJ3H1I4iSRpz7y8EecGyCJgxYcKECdMRTJsiYttkkyd/24abWTnzh4IoJkyYMGE6iCkvbbYJ4rqIuD/IRxeCOkOACRMmTJgeyDTb6iY5215E2vadtkyLCRMmTJgwtWHtpomnaLJZFFzr0BcTJkyYMB3NNGuL2aSGZ3PNPiEmTJgwYTqbaZbkbVOus8JkXlJt24n+Uy4cEyZMmDD9KtO+caddept4zf9Xy1FcCDBhwoQJ0wOZjOhCYGDChAkTJkyYDEyYML3L+AuSVN7WJKi7oQAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACYElEQVR42u3ay47CMAwFUP7/p5ktElO4ttMU0MkKVX3kZBEbx7f7T48bHh4eHh4eHh7eh/Fu8fjnRU/Xj+5/vPL8+/VT1bnh4eHh7eG92Wrje3oLlC9ftMR4eHh4G3lHEzq6p/fU0T29EIKHh4f3jbwkSFSDCh4eHt7v8aJy6stNP3kzHh4e3ufzkonmm36eQE+WEg8PD+8qXl6E3f976/keHh4eXsArtzS12gXycvB9PPDw8PDO5uUbcRVZDTbVN+Dh4eFdxdtTmMibA5Jg00yp8fDw8JbyJpt43oqaL82kvIuHh4d3Nq96oBV9ID70qibxzX8MeHh4eCfwXk960rpaLfhOYHh4eHg7efmHJ2XZvDg7CRJ4eHh4e3i90m2+9fdKwL0ggYeHh7eH1zuUqpYwkonmV8opNR4eHt5SXjVpnhyGTUoeUfsXHh4e3sm8JHm9F0e1UJvPYdR0hYeHh7eUV92ak8S62lbVO4R7k1Lj4eHhXcTrfX5yJV+sBYEBDw8Pr8hblsjmxYJx2fdNQo+Hh4d3Ea/3e75Aedl3FBjw8PDwlvLyTbnagLWqueqUnjI8PDy8AW/SdJUEjPzZaqkXDw8Pbz+veuiVFFh7LVnVFBwPDw9vJ686qgdjyxLlPGzg4eHhncybbMrVttReaMnbGvDw8PB28vJgMCki5Cn44sCAh4eHdxqvukHnT1Xfn4QoPDw8vO/irQoAq67j4eHhfSMvL0PkRd5q2o2Hh4e3n5cfes0P+AvTDZYPDw8Pbz+vWgLIP19dgkmxAw8PD28P7/cGHh4eHh4eHh7eB4w/Y2YWEWenQXAAAAAASUVORK5CYII=">
     
 </ul>
     
@@ -419,7 +419,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/RxSwift/">RxSwift</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Swift/">Swift</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/iOS/">iOS</a>
+        <a class="post_tag-link" href="/tags/Raspberry/">Raspberry</a>
     </ul>
     
 
@@ -435,7 +435,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改&url=http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=树莓派 + OpenWrt 打造无线路由科学上网&url=http://yoursite.com/2018/09/10/2018-09-10/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -444,7 +444,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=RxSwift 利用双向绑定实现 ControlProperty 可观察程序性更改&url=http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html&via=Jianing Wang" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=树莓派 + OpenWrt 打造无线路由科学上网&url=http://yoursite.com/2018/09/10/2018-09-10/index.html&via=Jianing Wang" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -453,7 +453,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/09/10/2018-09-10/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -462,7 +462,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2018/09/10/2018-09-10/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -486,93 +486,46 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在写一个 ReSwift 和 RxSwift 示例程序碰上了一个小问题.</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。</p>
 <a id="more"></a>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>举个例子, 当你点击屏幕上的一个 Switch 时,</p>
-<pre class=" language-swift"><code class="language-swift">mySwitch<span class="token punctuation">.</span>rx_value<span class="token punctuation">.</span>subscribeNext <span class="token punctuation">{</span> <span class="token punctuation">(</span>next<span class="token punctuation">)</span> <span class="token keyword">in</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">addDisposableTo</span><span class="token punctuation">(</span>disposeBag<span class="token punctuation">)</span>
-</code></pre>
-<p>控制台会打印 <code>bool</code>, 然而当你用程序去改变 switch 的值时, 并不会打印,</p>
-<pre class=" language-swift"><code class="language-swift">mySwitch<span class="token punctuation">.</span>on <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token comment" spellcheck="true">//Nothing visible in my debugger</span>
-</code></pre>
-<p>可以参见 Github 上的 <a href="https://github.com/ReactiveX/RxSwift/issues/551" target="_blank" rel="external">issues</a> 和 <a href="https://github.com/ReactiveX/RxSwift/issues/690" target="_blank" rel="external">issues</a></p>
-<h2 id="我遇见的问题"><a href="#我遇见的问题" class="headerlink" title="我遇见的问题"></a>我遇见的问题</h2><p>我在写 <a href="https://github.com/JianingWang/ReSwift-RxSwift-Login-Example" target="_blank" rel="external">ReSwift-RxSwift-Login-Example</a>, 为了更好的让大家直观的体验 ReSwift 和 RxSwift 对表单实时验证的效果, 做了一个自动输入的按钮, 效果如下图:</p>
-<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-cp-02.gif" alt="blog-cp-02"></p>
-<p>我首先将 <code>UITextField.rx.text</code> 绑定到 <code>State</code>, 然而用程序去改变 <code>rx.text</code> 时, 全局的 <code>state</code> 并不会改变.</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>不管是 <code>UISwitch.rx.value</code> 还是 <code>UITextField.rx.value</code> 这种 <code>ControlProperty</code> 并不会观察 <em>程序性改变</em>.</p>
-<p>解决的办法是利用双向绑定, 将 <code>ControlProperty</code> 和一个 <code>Variable</code> 绑定.</p>
-<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> switchValue <span class="token operator">=</span> <span class="token function">Variable</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
-<span class="token punctuation">(</span>mySwitch<span class="token punctuation">.</span>rx_value <span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">></span> switchValue<span class="token punctuation">)</span>
-    <span class="token punctuation">.</span><span class="token function">addDisposableTo</span><span class="token punctuation">(</span>disposeBag<span class="token punctuation">)</span>
-switchValue<span class="token punctuation">.</span><span class="token function">asObservable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span>subscribeNext <span class="token punctuation">{</span> <span class="token punctuation">(</span>next<span class="token punctuation">)</span> <span class="token keyword">in</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-  <span class="token punctuation">.</span><span class="token function">addDisposableTo</span><span class="token punctuation">(</span>disposeBag<span class="token punctuation">)</span>
-
-switchValue<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token boolean">true</span>
-</code></pre>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>针对我的需求, 我解决方案是将 <code>Variable</code> 负责 dispatch action, 来改变全局的 <code>State</code>, 然后 <code>Variable</code> 和 <code>UITextField.rx.text</code> 双向绑定, 当快速输入按钮被点击时, 改变 <code>Variable.value</code> 就可以实现这个效果了, 代码如下:</p>
-<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> phoneValue <span class="token operator">=</span> <span class="token function">Variable</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
-        <span class="token keyword">let</span> passwordValue <span class="token operator">=</span> <span class="token function">Variable</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
-
-        <span class="token punctuation">(</span>phoneTextField<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>text<span class="token punctuation">.</span>orEmpty <span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">></span> phoneValue<span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">addDisposableTo</span><span class="token punctuation">(</span>disposeBag<span class="token punctuation">)</span>
-        <span class="token punctuation">(</span>passwordTextField<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>text<span class="token punctuation">.</span>orEmpty <span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">></span> passwordValue<span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">addDisposableTo</span><span class="token punctuation">(</span>disposeBag<span class="token punctuation">)</span>
-
-        <span class="token keyword">let</span> <span class="token number">_</span> <span class="token operator">=</span> <span class="token builtin">Observable</span><span class="token punctuation">.</span><span class="token function">combineLatest</span><span class="token punctuation">(</span>phoneValue<span class="token punctuation">.</span><span class="token function">asObservable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> passwordValue<span class="token punctuation">.</span><span class="token function">asObservable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">observeOn</span><span class="token punctuation">(</span><span class="token builtin">MainScheduler</span><span class="token punctuation">.</span>asyncInstance<span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>onNext<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-                store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span>
-                    <span class="token function">InputLoginInfo</span><span class="token punctuation">(</span>
-                        phoneInput<span class="token punctuation">:</span> $<span class="token number">0</span><span class="token punctuation">,</span>
-                        passwordInput<span class="token punctuation">:</span> $<span class="token number">1</span>
-                    <span class="token punctuation">)</span>
-                <span class="token punctuation">)</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> disposeBag<span class="token punctuation">)</span>
-
-        fastInputButton<span class="token punctuation">.</span>rx<span class="token punctuation">.</span>tap
-            <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>onNext<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-                <span class="token function">stringToObservable</span><span class="token punctuation">(</span><span class="token builtin">Config</span><span class="token punctuation">.</span><span class="token builtin">Test</span><span class="token punctuation">.</span>phone<span class="token punctuation">,</span> interval<span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">scan</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> $<span class="token number">0</span> <span class="token operator">+</span> $<span class="token number">1</span> <span class="token punctuation">}</span>
-                    <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>onNext<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-                        phoneValue<span class="token punctuation">.</span>value <span class="token operator">=</span> $<span class="token number">0</span>
-                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
-                <span class="token function">stringToObservable</span><span class="token punctuation">(</span><span class="token builtin">Config</span><span class="token punctuation">.</span><span class="token builtin">Test</span><span class="token punctuation">.</span>password<span class="token punctuation">,</span> interval<span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">scan</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> $<span class="token number">0</span> <span class="token operator">+</span> $<span class="token number">1</span> <span class="token punctuation">}</span>
-                    <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>onNext<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-                        passwordValue<span class="token punctuation">.</span>value <span class="token operator">=</span> $<span class="token number">0</span>
-                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>disposeBag<span class="token punctuation">)</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">disposed</span><span class="token punctuation">(</span>by<span class="token punctuation">:</span> disposeBag<span class="token punctuation">)</span>
-</code></pre>
-<h2 id="双向绑定的实现"><a href="#双向绑定的实现" class="headerlink" title="双向绑定的实现"></a>双向绑定的实现</h2><p>可以看一下这些实现, <a href="https://github.com/ReactiveX/RxSwift/issues/606" target="_blank" rel="external">how to make bidirectional binding between view and viewmodel use RxSwift #606</a> 和 <a href="https://stackoverflow.com/questions/37496074/two-way-binding-in-rxswift" target="_blank" rel="external">Two way binding in RxSwift</a></p>
-<p>实现如下:</p>
-<pre class=" language-swift"><code class="language-swift"><span class="token keyword">infix</span> <span class="token keyword">operator</span> <span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">></span>
-
-<span class="token comment" spellcheck="true">/// Bidirectional binding</span>
-<span class="token comment" spellcheck="true">/// - note: see [link](https://github.com/ReactiveX/RxSwift/issues/606)</span>
-<span class="token comment" spellcheck="true">/// - returns: Disposable</span>
-<span class="token keyword">func</span> <span class="token operator">&lt;</span><span class="token operator">-</span><span class="token operator">></span> <span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">(</span>property<span class="token punctuation">:</span> <span class="token builtin">ControlProperty</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">,</span> variable<span class="token punctuation">:</span> <span class="token builtin">Variable</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token builtin">Disposable</span> <span class="token punctuation">{</span>
-    <span class="token keyword">let</span> bindToUIDisposable <span class="token operator">=</span> variable<span class="token punctuation">.</span><span class="token function">asObservable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> property<span class="token punctuation">)</span>
-    <span class="token keyword">let</span> bindToVariable <span class="token operator">=</span> property
-        <span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>onNext<span class="token punctuation">:</span> <span class="token punctuation">{</span> n <span class="token keyword">in</span>
-            variable<span class="token punctuation">.</span>value <span class="token operator">=</span> n
-        <span class="token punctuation">}</span><span class="token punctuation">,</span> onCompleted<span class="token punctuation">:</span>  <span class="token punctuation">{</span>
-            bindToUIDisposable<span class="token punctuation">.</span><span class="token function">dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">return</span> <span class="token builtin">Disposables</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>bindToUIDisposable<span class="token punctuation">,</span> bindToVariable<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>利用了 <code>Variable</code> 属于 <code>Subject</code> 的特性, 既能被订阅, 也能观察别人. 将 <code>Variable</code> 绑定到 <code>ControlProperty</code>, 再订阅 <code>ControlProperty</code>, 将改变赋给 <code>Variable.value</code>.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一点小技巧. 另, 示例程序链接为 <a href="https://github.com/JianingWang/ReSwift-RxSwift-Login-Example" target="_blank" rel="external">ReSwift-RxSwift-Login-Example</a>.</p>
+<p>为了尝鲜 Android P 正式版(9.0.0 PPR1.180610.011, Aug 2018, Telstra)，用 Bootloader 刷完之后第一次进系统，需要输入 Google 账号来“激活”，过去我都是在 WiFi 设置界面挂个 Http Proxy 到局域网的电脑来代理，但是千算万算没想到 Android P 的正式版 Http Proxy 功能挂了（事后经测试只有激活界面的 Http Proxy 挂了，进入系统后功能正常，<a href="https://issuetracker.google.com/issues/113304614" target="_blank" rel="external">BUG Report</a> 已经提交给 Google 了）。所以一个能科学上网的路由器就成了激活这半块砖的关键道具。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>这是我的准备清单：</p>
+<ul>
+<li>Raspberry 3 Model B</li>
+<li>LEDE</li>
+<li>Etcher</li>
+</ul>
+<p>我手头的树莓派是 Raspberry 3 Model B，这一款有 WiFi 的功能，所以不需要另外购买网卡，如果你是老版本的树莓派，还需要购买另外的无线网卡。还有一点就是处理器型号决定了 OpenWrt 的版本，因为目前 OpenWrt 并不支持 Pi3，所以选择其分支 <a href="http://downloads.lede-project.org" target="_blank" rel="external">LEDE</a>。根据我的树莓派型号，我选择了 <a href="http://downloads.lede-project.org/releases/17.01.4/targets/brcm2708/bcm2710" target="_blank" rel="external">bcm2710-rpi-3-ext4-sdcard.img.gz</a>。</p>
+<p><a href="https://etcher.io" target="_blank" rel="external">Etcher</a> 是树莓派官方推荐的镜像刻录工具，支持 macOS、Linux 和 Windows，用它把镜像写入 SD 卡中。</p>
+<h2 id="写入镜像"><a href="#写入镜像" class="headerlink" title="写入镜像"></a>写入镜像</h2><p>下面我们将开始动手实现这一过程。首先将下载的 LEDE 镜像用 Etcher 写入 SD 卡中。</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ro-01.png" alt="blog-ro-01"></p>
+<h2 id="设置路由器"><a href="#设置路由器" class="headerlink" title="设置路由器"></a>设置路由器</h2><p>将树莓派和电脑用网线连接起来，树莓派开机，在电脑中访问 192.168.1.1，就可以登录到 LEDE 的管理后台页面，首次登录不需要密码，直接登录就好，然后设置密码。</p>
+<h3 id="无线网络功能激活"><a href="#无线网络功能激活" class="headerlink" title="无线网络功能激活"></a>无线网络功能激活</h3><p>点击 Network -&gt; Wireless 把无线网络功能激活。</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ro-02.png" alt="blog-ro-02"></p>
+<p>点击 Edit，可以设置无线网的名称和密码等。</p>
+<h3 id="添加-WAN-口"><a href="#添加-WAN-口" class="headerlink" title="添加 WAN 口"></a>添加 WAN 口</h3><p>点击 Network -&gt; Interfaces -&gt; Add new Interface。名称填 WAN，协议按照你的宽带联网方式来，因为我在学校 DHCP 动态分配 IP，所以我用 DHCP，如果你是拨号上网，就选择 PPPoE 然后填写宽带商提供的账号密码即可。保存应用即可。</p>
+<p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ro-03.png" alt="blog-ro-03"></p>
+<h3 id="将物理网口修改为-WAN-口"><a href="#将物理网口修改为-WAN-口" class="headerlink" title="将物理网口修改为 WAN 口"></a>将物理网口修改为 WAN 口</h3><p>目前的物理网口是 LAN 口，需要将其修改为 WAN。SSH 登录树莓派，输入以下命令</p>
+<pre><code>$ vi /etc/config/network
+</code></pre><p><img src="http://on74pxnsk.bkt.clouddn.com/blog-ro-04.png" alt="blog-ro-04"></p>
+<p>将 lan 配置下的 option ifname ‘eth0’ 注释掉即可。</p>
+<p>输入命令 <code>reboot</code> 重启路由器。将连接电脑和树莓派的网线断开，把带有网络的网线插入树莓派的网口。</p>
+<h2 id="给树莓派安装科学上网软件"><a href="#给树莓派安装科学上网软件" class="headerlink" title="给树莓派安装科学上网软件"></a>给树莓派安装科学上网软件</h2><p>重启好后，电脑连接树莓派所发出的无线网络，默认名称 LEDE 没有密码，如果你修改过，则相应的填入即可。此时就可以访问国内网站了。</p>
+<p>在后台页面中，System -&gt; Software 页面里有升级的按钮，但是推荐通过命令行来升级。</p>
+<p>SSH 登入树莓派，输入以下命令。</p>
+<pre><code>$ opkg udpate
+</code></pre><p>升级完成后，刷新树莓派后台页面，升级按钮就没了。</p>
+<p>在 LEDE 中，你安装的软件总是两个，一个 xxx.ipk，一个形如 luci-app-xxx.ipk，前者相当于后台，提供具体的功能，后者相当于前端，方便我们通过 LEDE 管理页面来设置。</p>
+<p>我们所需要的科学上网软件和后面所提到的 DNS 软件等，都是由 <a href="https://github.com/aa65535" target="_blank" rel="external">aa65535</a> 大佬提供的。</p>
+<p>这里将使用 scp 命令将 $$ 软件上传到树莓派。执行以下命令来安装。</p>
+<pre><code>$ opkg install xxx.ipk
+</code></pre><p>刷新页面，然后 Service 里面会出现新的科学上网选项，进入相应页面后，先在 Server 管理里面输入填入你所设置的科学上网账号。然后在基本设置里，将透明代理中的服务器设置为你刚填好的服务器，保存应用即可。刷新页面，如果透明代理变为运行中即可。</p>
+<h2 id="树莓派-DNS-设置"><a href="#树莓派-DNS-设置" class="headerlink" title="树莓派 DNS 设置"></a>树莓派 DNS 设置</h2><p>如果你现在可以科学上网了，恭喜你。如果没有，说明可能存在 DNS 污染等问题，你完成的工作只有一半。具体的 DNS 设置请参考 <a href="https://cokebar.info/archives/664" target="_blank" rel="external">飞羽博客</a>，写的非常详细，我也不再照搬一遍了。</p>
+<blockquote>
+<p>参考</p>
+<p><a href="https://www.youtube.com/watch?v=QSuxEax-GAc" target="_blank" rel="external">Vedio Talk</a></p>
+<p><a href="https://cokebar.info/archives/664" target="_blank" rel="external">飞羽博客</a></p>
+</blockquote>
 
     
 
@@ -590,8 +543,8 @@ switchValue<span class="token punctuation">.</span>value <span class="token oper
     <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yoursite.com/2017/09/04/RxSwift利用双向绑定实现ControlProperty可观察程序性更改/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://yoursite.com/2018/09/10/2018-09-10/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yoursite.com/2018/09/10/2018-09-10/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 <script type="text/ls-javascript" id="disqus-thread-script">
@@ -621,21 +574,13 @@ switchValue<span class="token punctuation">.</span>value <span class="token oper
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/09/05/iOS 单向数据流架构之 ReactorKit/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/08/18/Moya-RxSwift错误处理的问题/" id="post_nav-older" class="next-content">
+        <a href="/2018/07/27/2018-07-27/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">

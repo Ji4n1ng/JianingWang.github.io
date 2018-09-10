@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-27T13:32:36.858Z</updated>
+  <updated>2018-09-10T11:22:23.990Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派 + OpenWrt 打造无线路由科学上网</title>
+    <link href="http://yoursite.com/2018/09/10/2018-09-10/"/>
+    <id>http://yoursite.com/2018/09/10/2018-09-10/</id>
+    <published>2018-09-10T12:00:00.000Z</published>
+    <updated>2018-09-10T11:22:23.990Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;把树莓派刷成无线路由器这件事情起因比较奇怪——激活我的 Pixel2 XL。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tips" scheme="http://yoursite.com/categories/Tips/"/>
+    
+    
+      <category term="Raspberry" scheme="http://yoursite.com/tags/Raspberry/"/>
+    
+  </entry>
   
   <entry>
     <title>利用 Automator 将 PPT / Word 批量转换为 PDF</title>
